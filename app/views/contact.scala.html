@@ -1,0 +1,40 @@
+@()(implicit title: String)
+
+@import enums.MenuItems._
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    @preamble(title)
+</head>
+<body>
+    @navbar(CONTACT)
+
+    <div class="banner-heading text-center">
+        <header>
+            <h1>Contact</h1>
+        </header>
+    </div>
+    <div class="row">
+        <form name="content-form" action="/post-message" method="POST">
+            <div class="col-md-3 col-md-offset-3">
+                <h1>Send me a message</h1>
+                <hr>
+                <div class="form-group">
+                    <label for="message-subject">Subject</label>
+                    <input type="text" class="form-control" id="message-subject" name="message-subject">
+                    <label for="message-author">From</label>
+                    <input type="text" class="form-control" id="message-author" name="message-author">
+                </div>
+            </div>
+            <div class="col-md-6 col-md-offset-3">
+                <textarea name="message" id="message" rows="10" cols="100"></textarea>
+                <br />
+                <button type="submit" name="submit-message" id="submit-message" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+    </div>
+
+    @footer()
+</body>
+</html>

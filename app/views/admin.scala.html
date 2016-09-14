@@ -1,0 +1,119 @@
+@(messages: List[objects.InternalMessage])(implicit title: String)
+
+@import enums.MenuItems._
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    @preamble(title)
+    <script src="http://js.nicedit.com/nicEdit-latest.js" type="text/javascript"></script>
+    <script type="text/javascript">bkLib.onDomLoaded(nicEditors.allTextAreas);</script>
+</head>
+<body>
+    @navbar(NONE)
+
+    <div class="modal fade" id="confirm-delete-modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Are you sure?</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you wish to delete this message? Once you do this, there is no going back.</p>
+                </div>
+                <div class="modal-footer">
+                    <form name="content-form" action="/delete-message" method="POST">
+                        <input type="hidden" name="messageid">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" id="confirm-remove-message" class="btn btn-primary">Confirm</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="banner-heading text-center">
+        <header>
+            <h1>Admin</h1>
+            <p>Only for the likes of Jeremy</p>
+        </header>
+    </div>
+    <div class="row">
+        <form name="content-form" action="/post-article" method="POST">
+            <div class="col-md-3 col-md-offset-3">
+                <h1>Add a new post</h1>
+                <hr>
+                <div class="form-group">
+                    <label for="article-name">Name</label>
+                    <input type="text" class="form-control" id="article-name" name="article-name">
+                </div>
+            </div>
+            <div class="col-md-6 col-md-offset-3">
+                    <textarea name="article" id="article" rows="10" cols="100"></textarea>
+                    <br />
+                    <button type="submit" name="submit-article" id="submit-article" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <h1>Messages</h1>
+            <hr>
+        </div>
+    </div>
+
+    @defining(1 + (messages.length - 1) / 10) { numPages =>
+        @if(messages.length > 10) {
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-3">
+                        <ul class="pagination" id="pages-nav">
+                            <li class="disabled"><a href="javascript:previousPage()">&laquo;</a></li>
+                            @for(i <- 1 to numPages) {
+                                @if(i == 1) {
+                                    <li class="active">
+                                } else {
+                                    <li>
+                                }
+                                    <a href="javascript:enableNextPage(@i)">@i</a>
+                                </li>
+                            }
+
+                            @if(numPages > 1) {
+                                <li><a href="javascript:nextPage()">&raquo;</a></li>
+                            } else {
+                                <li class="disabled"><a href="javascript:nextPage()">&raquo;</a></li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+        }
+
+        <div id="message-list">
+            @for((internalMessage, ind) <- messages.zipWithIndex) {
+                @if(ind >= 10) {
+                    <div class="row" style="display: none;">
+                } else {
+                    <div class="row">
+                }
+                    <div class="col-md-6 col-md-offset-3">
+                        <h3 class="title">@internalMessage.message.subject</h3>
+                        <p class="light-text">
+                            <span class="glyphicon glyphicon-user"></span> From @internalMessage.message.author
+                            <a href="#" class="btn" style="float: right;" data-toggle="modal"
+                                data-target="#confirm-delete-modal" data-messageid="@internalMessage.id">
+                                 <span class="glyphicon glyphicon-remove"></span> Remove
+                            </a>
+                        </p>
+                        <p>ID: @internalMessage.id</p>
+                        <p>@internalMessage.message.content</p>
+                        <hr>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    @footer()
+    <script src="@routes.Assets.versioned("javascripts/admin.js")"></script>
+</body>
+</html>

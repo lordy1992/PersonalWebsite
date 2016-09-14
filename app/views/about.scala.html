@@ -1,0 +1,39 @@
+@()(implicit title: String)
+
+@import enums.MenuItems._
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    @preamble(title)
+</head>
+<body>
+    @navbar(ABOUT)
+
+    <div class="banner-heading text-center">
+        <header>
+            <h1>About</h1>
+            <p>A brief biography</p>
+        </header>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <p>Explain who I am, what the intention of this website is, etc...</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec congue mi sit amet sapien mattis,
+                        et congue elit tincidunt. In iaculis, eros eget mollis aliquet, lorem orci volutpat mi, eget egestas
+                        magna tellus non neque. Quisque vel erat quis dolor sollicitudin mattis a sit amet tortor. Aliquam
+                        mattis dolor in risus ultricies euismod. Vestibulum lectus sem, ultricies et erat non, volutpat
+                        feugiat purus. In suscipit nisi a enim euismod vehicula. Suspendisse potenti. Nullam et semper
+                        augue. Nam et posuere dolor. Duis sit amet quam est. Duis viverra accumsan dui, luctus finibus nibh
+                        malesuada non. Phasellus nibh felis, semper nec tincidunt non, malesuada eget sapien. Nullam
+                        pulvinar gravida arcu, nec dictum velit maximus eget. Morbi quis eleifend nulla.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @footer()
+</body>
+</html>

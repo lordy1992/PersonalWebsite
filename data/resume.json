@@ -1,0 +1,75 @@
+{
+    "lastUpdated": 1473740853,
+    "profileImageUrl": "http://placehold.it/250x250",
+    "name": "Jeremy Lord",
+    "jobTitle": "Software Engineer",
+    "currentCompany": "Amazon.com",
+    "phoneNo": "Ask for contact number",
+    "email": "jlord_2006@hotmail.com",
+    "summary": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu enim id lectus sodales malesuada ullamcorper sit amet magna. Aenean diam mi, pharetra a hendrerit nec, venenatis in ante. Vestibulum lacus leo, vulputate eu tincidunt quis, placerat iaculis massa. Sed sed sem augue. Maecenas pretium fermentum augue. In hac habitasse platea dictumst. Duis ultrices justo justo, eu placerat odio ornare a. Donec sodales elit nec enim pharetra, at hendrerit tortor fermentum.</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam hendrerit iaculis magna a facilisis. Quisque congue non dui id finibus. Vivamus orci est, ornare eu imperdiet ut, viverra sit amet libero. Phasellus aliquam erat ligula, ac lacinia neque condimentum a. Vivamus egestas pretium sem porttitor pharetra.</p>",
+    "researchInterests": "Software Engineering, Artificial Intelligence, Programming Language Theory, ...",
+    "pastExperience": [
+        {
+            "jobTitle": "Software Engineering Intern",
+            "company": "Amazon.com",
+            "description": "Fusce ex nibh, pellentesque vitae pellentesque at, malesuada efficitur augue. Maecenas consequat ultrices sodales. Integer congue ligula in posuere auctor. Cras pretium nibh at nisi mattis, nec sodales magna suscipit. Sed pretium dui nec porta cursus.",
+            "additionalPoints": []
+        },
+        {
+            "jobTitle": "Software Engineering Intern",
+            "company": "Broadcom",
+            "description": "Duis viverra, ligula a sollicitudin convallis, risus arcu tempor dui, id ultrices purus elit sed nunc. Nam vitae dapibus diam. Donec aliquam ullamcorper lobortis. Duis faucibus commodo molestie.",
+            "additionalPoints": [
+                "Vestibulum ac nunc volutpat mauris tincidunt congue. Sed ac lacus et velit feugiat consectetur id ornare justo. Sed sit amet vestibulum purus.",
+                "Praesent arcu tortor, commodo pulvinar libero quis, pharetra ullamcorper leo. Proin quis urna massa. Phasellus sed ullamcorper massa."
+            ]
+        }
+    ],
+    "expertise": [
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
+    ],
+    "skillBars": [
+        {
+            "skill": "Java/JavaEE/Spring Framework",
+            "progress": 80,
+            "style": "success"
+        },
+        {
+            "skill": "C++",
+            "progress": 80,
+            "style": "success"
+        },
+        {
+            "skill": "Javascript",
+            "progress": 70,
+            "style": "success"
+        },
+        {
+            "skill": "Python",
+            "progress": 70,
+            "style": "success"
+        },
+        {
+            "skill": "Scala",
+            "progress": 40,
+            "style": "warning"
+        },
+        {
+            "skill": "Go",
+            "progress": 20,
+            "style": "danger"
+        }
+    ],
+    "education": [
+        {
+            "degree": "Bachelor's in Computer Engineering",
+            "year": 2015,
+            "gpa": "4.00"
+        }
+    ]
+}

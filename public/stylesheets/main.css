@@ -1,0 +1,22 @@
+body {
+    padding-top: 50px; /* For the fixed navbar */
+}
+
+.banner-heading {
+    padding-top: 60px;
+    padding-bottom: 60px;
+    margin-bottom: 30px;
+    background-color: #1ca8dd;
+    background-image: linear-gradient(to bottom, #137499, #ffffff);
+}
+
+.banner-heading h1 {
+    font-size: 60px;
+    margin-bottom: 0px;
+    color: #3f3f3f;
+}
+
+.banner-heading p {
+    font-size: 24px;
+    color: #696969;
+}

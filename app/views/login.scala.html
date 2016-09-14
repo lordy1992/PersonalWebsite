@@ -1,0 +1,30 @@
+@(loginForm: Form[(String, String)])(implicit title: String, messages: Messages)
+
+@import helper._
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    @preamble(title)
+</head>
+<body style="padding-top: 0px">
+
+    <div class="row" style="padding-left: 10px">
+        <div class="col-md-3" >
+            <h1>Admin Login</h1>
+            <br/>
+            @if(loginForm.hasGlobalErrors) {
+                <div class="alert alert-danger" role="alert"><strong>Too bad!</strong> The username/password combo is incorrect.</div>
+            } else {
+                @helper.form(action = routes.AuthController.authenticate()) {
+                    @helper.inputText(loginForm("Username"))
+                    @helper.inputPassword(loginForm("Password"))
+                    <button type="submit" name="login" id="login" class="btn btn-primary">Login</button>
+                }
+            }
+        </div>
+    </div>
+
+    @footer()
+</body>
+</html>
