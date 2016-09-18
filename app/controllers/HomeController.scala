@@ -1,18 +1,15 @@
 package controllers
 
-import java.io.FileInputStream
 import javax.inject._
 
-import dao.{ArticleDao, MessageDao}
+import dao.{ArticleDao, MessageDao, ResumeDao}
 import objects._
 import play.api.Logger
-import play.api.data._
 import play.api.data.Forms._
+import play.api.data._
 import play.api.db.Database
-import play.api.libs.json.{JsPath, Json, Reads}
-import play.api.libs.functional.syntax._
+import play.api.libs.json.Json
 import play.api.mvc._
-import java.util.Date
 
 /**
  * This controller creates an `Action` to handle HTTP requests to the
@@ -25,6 +22,7 @@ class HomeController @Inject()(db: Database) extends Controller with Secured {
 
   val articleDao = new ArticleDao(db)
   val messageDao = new MessageDao(db)
+  val resumeDao = new ResumeDao()
 
   val articleForm = Form(
     mapping(
@@ -65,52 +63,19 @@ class HomeController @Inject()(db: Database) extends Controller with Secured {
     Ok(views.html.writing(articleDao.listAllArticles()))
   }
 
-  def resume = Action {
-    val resumeStream = new FileInputStream("data/resume.json")
-    val resumeJson = try {
-      Json.parse(resumeStream)
-    } finally {
-      resumeStream.close()
-    }
+  def resume = Action { request =>
+    val resumeObj = resumeDao.getResumeFromJson("data/resume.json")
+    val isAdmin = request.session.get(Security.username).isDefined
 
-    implicit val educationReads: Reads[Education] = (
-      (JsPath \ "degree").read[String] and
-      (JsPath \ "year").read[Int] and
-      (JsPath \ "gpa").read[String]
-    )(Education.apply _)
+    Ok(views.html.resume(resumeObj, isAdmin, false))
+  }
 
-    implicit val skillBarReads: Reads[SkillBar] = (
-      (JsPath \ "skill").read[String] and
-      (JsPath \ "progress").read[Int] and
-      (JsPath \ "style").read[String]
-    )(SkillBar.apply _)
+  def resume_edit = withAuth { username => implicit  request =>
+    val resumeObj = resumeDao.getResumeFromJson("data/resume.json")
+    val isAdmin = request.session.get(Security.username).isDefined
 
-    implicit val pastExperienceReads: Reads[Experience] = (
-      (JsPath \ "jobTitle").read[String] and
-      (JsPath \ "company").read[String] and
-      (JsPath \ "description").read[String] and
-      (JsPath \ "additionalPoints").read[Seq[String]]
-    )(Experience.apply _)
-
-    implicit val resumeReads: Reads[Resume] = (
-      (JsPath \ "lastUpdated").read[Long] and
-      (JsPath \ "profileImageUrl").read[String] and
-      (JsPath \ "name").read[String] and
-      (JsPath \ "jobTitle").read[String] and
-      (JsPath \ "currentCompany").read[String] and
-      (JsPath \ "phoneNo").read[String] and
-      (JsPath \ "email").read[String] and
-      (JsPath \ "summary").read[String] and
-      (JsPath \ "researchInterests").read[String] and
-      (JsPath \ "pastExperience").read[Seq[Experience]] and
-      (JsPath \ "expertise").read[Seq[String]] and
-      (JsPath \ "skillBars").read[Seq[SkillBar]] and
-      (JsPath \ "education").read[Seq[Education]]
-    )(Resume.apply _)
-
-    val resumeObj = resumeJson.as[Resume]
-
-    Ok(views.html.resume(resumeObj))
+    Logger.info("In the edit logger!")
+    Ok(views.html.resume(resumeObj, true, true))
   }
 
   def post_message = Action { implicit request =>
@@ -133,5 +98,32 @@ class HomeController @Inject()(db: Database) extends Controller with Secured {
     val messageId = deleteForm.bindFromRequest.get
     messageDao.removeMessage(messageId)
     Redirect(controllers.routes.HomeController.admin())
+  }
+
+  def update_resume_heading = withAuth { username => implicit request =>
+    // TODO: Add validation to the parameters
+    request.body.asJson.map { json =>
+      val resumeName = (json \ "resumeName").as[String]
+      val resumeJobTitle = (json \ "resumeJobTitle").as[String]
+      val resumeCurrentCompany = (json \ "resumeCurrentCompany").as[String]
+      val resumePhoneNo = (json \ "resumePhoneNo").as[String]
+      val resumeEmail = (json \ "resumeEmail").as[String]
+      val resumeHeader = ResumeHeader(resumeName, resumeJobTitle, resumeCurrentCompany, resumePhoneNo, resumeEmail)
+      resumeDao.updateResumeHeader("data/resume.json", resumeHeader)
+
+      Ok(Json.obj("status" -> "Success"))
+    }.getOrElse {
+      BadRequest(Json.obj("status" -> "Failure"))
+    }
+  }
+
+  def update_summary = withAuth { username => implicit request =>
+    request.body.asJson.map { json =>
+      val resumeSummary = (json \ "summaryContent").as[String]
+      resumeDao.updateResumeSummary("data/resume.json", resumeSummary)
+      Ok(Json.obj("status" -> "Success"))
+    }.getOrElse {
+      BadRequest(Json.obj("status" -> "Failure"))
+    }
   }
 }

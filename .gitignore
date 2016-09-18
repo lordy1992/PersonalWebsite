@@ -16,3 +16,5 @@ target
 /uploads
 *.iml
 *.sbtserver
+/data/backups/*.json
+/tmp/*.json
