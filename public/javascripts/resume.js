@@ -10,12 +10,36 @@ function summaryCallback() {
     $('#summary-readable-text').html(newValue);
 }
 
+function researchInterestCallback() {
+    var newValue = $('#research-interests-info-form').find('textarea').val();
+    $('#research-interests-readable-text').html(newValue);
+}
+
+function formPastExperienceRequest() {
+    var pastExperience = [];
+
+    $('#past-experience-list li').each(function() {
+        var experienceContent = {};
+        experienceContent['jobTitle'] = $(this).find('input').first().val();
+        experienceContent['company'] = $(this).find('input').eq(1).val();
+        experienceContent['description'] = $(this).find('textarea').val();
+
+        pastExperience.push(experienceContent);
+    });
+
+    return pastExperience;
+}
+
+function handleRemovePastExperience(elem) {
+    $(elem).parent().remove();
+}
+
 $(document).ready(function() {
     var editLinks = [
         {edit: '#top-level-info-edit-link', form: '#top-level-info-form', successCallback: topLevelInfoCallback},
         {edit: '#summary-edit-link', form: '#summary-info-form', successCallback: summaryCallback},
-        {edit: '#research-interests-edit-link', form: '#research-interests-info-form'},
-        {edit: '#past-experience-edit-link', form: '#past-experience-info-form'},
+        {edit: '#research-interests-edit-link', form: '#research-interests-info-form', successCallback: researchInterestCallback},
+        {edit: '#past-experience-edit-link', form: '#past-experience-info-form', dataCallback: formPastExperienceRequest},
         {edit: '#expertise-edit-link', form: '#expertise-info-form'},
         {edit: '#language-tech-edit-link', form: '#language-tech-info-form'},
         {edit: '#education-edit-link', form: '#education-info-form'}];
@@ -38,10 +62,14 @@ $(document).ready(function() {
             var actionUrl = form.attr('action');
             var postData = {};
 
-            form.find('input,textarea').each(function(index) {
-                var elName = $(this).attr('name');
-                postData[elName] = $(this).val();
-            });
+            if (editLinks[i].dataCallback === undefined) {
+                form.find('input,textarea').each(function(index) {
+                    var elName = $(this).attr('name');
+                    postData[elName] = $(this).val();
+                });
+            } else {
+                postData = editLinks[i].dataCallback.call();
+            }
 
             $.ajax({
                 url: actionUrl,
@@ -66,4 +94,14 @@ $(document).ready(function() {
             });
         });
     }
+
+    $('#add-new-experience-button').click(function() {
+        var lastListItem = $('#past-experience-list li').last().clone();
+
+        lastListItem.find('input').attr('value', '');
+        lastListItem.find('textarea').text('');
+        lastListItem.find('.nicEdit-main').text('');
+
+        $('#past-experience-list').append(lastListItem);
+    });
 });

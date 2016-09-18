@@ -23,6 +23,12 @@
     </div>
 }
 
+@buttonForRemoveItem() = {
+        <button type="button" class="btn btn-link" onclick="handleRemovePastExperience(this)" style="float: right; padding-top: 0px; border-top: 0px; color: #c51111;">
+            <span class="glyphicon glyphicon-remove"></span>
+        </button>
+}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -104,7 +110,7 @@
                         }
                         @headerWithEditOption("Research Interests", "research-interests-edit-link")
                         <div id="research-interests-readable-text" class="locked-mode">
-                            <p>@resume.researchInterests</p>
+                            @Html(resume.researchInterests)
                         </div>
                         @if(isAdmin) {
                                 <div id="research-interests-editable-text" class="editable-mode">
@@ -124,20 +130,41 @@
                                 @for(experience <- resume.pastExperience) {
                                     <a class="list-group-item inactive-link" href="#">
                                         <h4 class="list-group-item-heading">@experience.jobTitle at @experience.company</h4>
-                                        <p class="list-group-item-text">@experience.description</p>
+                                   @*   <p class="list-group-item-text">@experience.description</p>
                                         @if(experience.additionalPoints.length > 0) {
                                             <ul>
                                                 @for(point <- experience.additionalPoints) {
                                                     <li>@point</li>
                                                 }
                                             </ul>
-                                        }
+                                        } *@
+                                        @Html(experience.description)
                                     </a>
                                 }
                             </ul>
                         </div>
                         @if(isAdmin) {
-                                @buttonForEditSave("past-experience-submit")
+                                <div class="editable-mode">
+                                    <ul id="past-experience-list" class="list-group">
+                                        @for((experience, index) <- resume.pastExperience.zipWithIndex) {
+                                            <li class="list-group-item">
+                                                @buttonForRemoveItem()
+                                                <label>Job Title</label><input type="text" value="@experience.jobTitle" class="form-control"/>
+                                                <br>
+                                                <label>Company</label><input type="text" value="@experience.company" class="form-control" />
+                                                <br>
+                                                <textarea rows="10" cols="100">@experience.description</textarea>
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+                                <div align="right" style="display: none;">
+                                    <button id="add-new-experience-button" class="btn btn-link" type="button" style="color: green;">
+                                        <span class="glyphicon glyphicon-plus"></span>
+                                    </button>
+                                    <button id="past-experience-submit" class="btn btn-primary"
+                                            type="submit" style="margin-bottom: 5px;">Save</button>
+                                </div>
                             </form>
                         }
                     </div>

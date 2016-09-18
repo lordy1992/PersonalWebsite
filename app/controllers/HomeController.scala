@@ -8,8 +8,9 @@ import play.api.Logger
 import play.api.data.Forms._
 import play.api.data._
 import play.api.db.Database
-import play.api.libs.json.Json
+import play.api.libs.json.{JsPath, Json, Reads}
 import play.api.mvc._
+import play.api.libs.functional.syntax._
 
 /**
  * This controller creates an `Action` to handle HTTP requests to the
@@ -121,6 +122,36 @@ class HomeController @Inject()(db: Database) extends Controller with Secured {
     request.body.asJson.map { json =>
       val resumeSummary = (json \ "summaryContent").as[String]
       resumeDao.updateResumeSummary("data/resume.json", resumeSummary)
+      Ok(Json.obj("status" -> "Success"))
+    }.getOrElse {
+      BadRequest(Json.obj("status" -> "Failure"))
+    }
+  }
+
+  def update_research_interests = withAuth { username => implicit request =>
+    request.body.asJson.map { json =>
+      val researchInterests = (json \ "researchInterestContent").as[String]
+      resumeDao.updateResearchInterests("data/resume.json", researchInterests)
+      Ok(Json.obj("status" -> "Success"))
+    }.getOrElse {
+      BadRequest(Json.obj("status" -> "Failure"))
+    }
+  }
+
+  def update_past_experience = withAuth { username => implicit request =>
+    request.body.asJson.map { json =>
+      implicit val pastExperienceReader: Reads[(String, String, String)] = (
+        (JsPath \ "jobTitle").read[String] and
+        (JsPath \ "company").read[String] and
+        (JsPath \ "description").read[String]
+      ).tupled
+
+      val tupList = json.as[List[(String, String, String)]]
+      val experiences = tupList.map { case (jobTitle, company, description) =>
+        Experience(jobTitle, company, description, Nil)
+      }
+
+      resumeDao.updateExperience("data/resume.json", experiences)
       Ok(Json.obj("status" -> "Success"))
     }.getOrElse {
       BadRequest(Json.obj("status" -> "Failure"))

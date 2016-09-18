@@ -2,23 +2,24 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-GET     /                           controllers.HomeController.index
-# An example controller showing how to use dependency injection
-GET     /about                      controllers.HomeController.about
-GET     /contact                    controllers.HomeController.contact
-GET     /programming                controllers.HomeController.programming
-GET     /writing                    controllers.HomeController.writing
-GET     /resume/edit                controllers.HomeController.resume_edit
-GET     /resume                     controllers.HomeController.resume
-GET     /login                      controllers.AuthController.login
-GET     /authenticate               controllers.AuthController.authenticate
-GET     /logout                     controllers.AuthController.logout
-GET     /admin                      controllers.HomeController.admin
-POST    /post-article               controllers.HomeController.post_article
-POST    /post-message               controllers.HomeController.post_message
-POST    /delete-message             controllers.HomeController.delete_message
-POST    /resume/update-heading      controllers.HomeController.update_resume_heading
-POST    /resume/update-summary      controllers.HomeController.update_summary
+GET     /                                   controllers.HomeController.index
+GET     /about                              controllers.HomeController.about
+GET     /contact                            controllers.HomeController.contact
+GET     /programming                        controllers.HomeController.programming
+GET     /writing                            controllers.HomeController.writing
+GET     /resume/edit                        controllers.HomeController.resume_edit
+GET     /resume                             controllers.HomeController.resume
+GET     /login                              controllers.AuthController.login
+GET     /authenticate                       controllers.AuthController.authenticate
+GET     /logout                             controllers.AuthController.logout
+GET     /admin                              controllers.HomeController.admin
+POST    /post-article                       controllers.HomeController.post_article
+POST    /post-message                       controllers.HomeController.post_message
+POST    /delete-message                     controllers.HomeController.delete_message
+POST    /resume/update-heading              controllers.HomeController.update_resume_heading
+POST    /resume/update-summary              controllers.HomeController.update_summary
+POST    /resume/update-research-interests   controllers.HomeController.update_research_interests
+POST    /resume/update-past-experience      controllers.HomeController.update_past_experience
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
