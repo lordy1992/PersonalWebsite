@@ -34,6 +34,12 @@ function handleRemovePastExperience(elem) {
     $(elem).parent().remove();
 }
 
+function addDynamicEditor(listItem) {
+    listItem.append('<textarea id="experience-description-' + listItem.index() + '" rows="10" cols="100"></textarea>')
+    var editElem = listItem.find('textarea')[0];
+    return new nicEditor().panelInstance(editElem);
+}
+
 $(document).ready(function() {
     var editLinks = [
         {edit: '#top-level-info-edit-link', form: '#top-level-info-form', successCallback: topLevelInfoCallback},
@@ -43,6 +49,21 @@ $(document).ready(function() {
         {edit: '#expertise-edit-link', form: '#expertise-info-form'},
         {edit: '#language-tech-edit-link', form: '#language-tech-info-form'},
         {edit: '#education-edit-link', form: '#education-info-form'}];
+
+    var editors = [];
+
+    $(document).on('click', '.remove-exp', function(e) {
+        e.preventDefault();
+        var index = $(this).parent().index();
+        var textElem = $(this).parent().find('textarea');
+        $(this).parent().remove();
+        editors[index].removeInstance(textElem[0]);
+        editors.splice(index, 1);
+    });
+
+    $('#past-experience-list').children().each(function() {
+        editors[editors.length] = addDynamicEditor($(this));
+    });
 
     for (let i = 0; i < editLinks.length; i++) {
         $(editLinks[i].form).find('.editable-mode').hide();
@@ -96,12 +117,9 @@ $(document).ready(function() {
     }
 
     $('#add-new-experience-button').click(function() {
-        var lastListItem = $('#past-experience-list li').last().clone();
-
-        lastListItem.find('input').attr('value', '');
-        lastListItem.find('textarea').text('');
-        lastListItem.find('.nicEdit-main').text('');
-
+        var lastListItem = $('#experience-item-cloneable').clone();
         $('#past-experience-list').append(lastListItem);
+        lastListItem.show();
+        editors[lastListItem.index()] = addDynamicEditor(lastListItem);
     });
 });

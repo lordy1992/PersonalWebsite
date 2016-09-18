@@ -24,7 +24,7 @@
 }
 
 @buttonForRemoveItem() = {
-        <button type="button" class="btn btn-link" onclick="handleRemovePastExperience(this)" style="float: right; padding-top: 0px; border-top: 0px; color: #c51111;">
+        <button type="button" class="btn btn-link remove-exp" style="float: right; padding-top: 0px; border-top: 0px; color: #c51111;">
             <span class="glyphicon glyphicon-remove"></span>
         </button>
 }
@@ -39,7 +39,15 @@
 </head>
 <body>
     @navbar(RESUME)
-
+    @if(isAdmin) {
+        <li id="experience-item-cloneable" class="list-group-item" style="display: none;">
+            @buttonForRemoveItem()
+            <label>Job Title</label><input type="text" value="" class="form-control"/>
+            <br>
+            <label>Company</label><input type="text" value="" class="form-control" />
+            <br>
+        </li>
+    }
     <div class="resume">
         <header class="banner-heading text-center">
             <h1 class="page-title">Resume</h1>
@@ -153,7 +161,6 @@
                                                 <br>
                                                 <label>Company</label><input type="text" value="@experience.company" class="form-control" />
                                                 <br>
-                                                <textarea rows="10" cols="100">@experience.description</textarea>
                                             </li>
                                         }
                                     </ul>
