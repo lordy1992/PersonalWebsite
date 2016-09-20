@@ -18,6 +18,8 @@
 
 @buttonForEditSave(buttonId: String) = {
     <div align="right" style="display: none;">
+        <button id="@(buttonId)-cancel" class="btn btn-default"
+                type="button" style="margin-bottom: 5px;">Cancel</button>
         <button id="@buttonId" class="btn btn-primary"
                 type="submit" style="margin-bottom: 5px;">Save</button>
     </div>
@@ -138,15 +140,9 @@
                                 @for(experience <- resume.pastExperience) {
                                     <a class="list-group-item inactive-link" href="#">
                                         <h4 class="list-group-item-heading">@experience.jobTitle at @experience.company</h4>
-                                   @*   <p class="list-group-item-text">@experience.description</p>
-                                        @if(experience.additionalPoints.length > 0) {
-                                            <ul>
-                                                @for(point <- experience.additionalPoints) {
-                                                    <li>@point</li>
-                                                }
-                                            </ul>
-                                        } *@
-                                        @Html(experience.description)
+                                        <div class="past-experience-description">
+                                            @Html(experience.description)
+                                        </div>
                                     </a>
                                 }
                             </ul>
@@ -169,6 +165,8 @@
                                     <button id="add-new-experience-button" class="btn btn-link" type="button" style="color: green;">
                                         <span class="glyphicon glyphicon-plus"></span>
                                     </button>
+                                    <button id="past-experience-submit-cancel" class="btn btn-default"
+                                            type="button" style="margin-bottom: 5px;">Cancel</button>
                                     <button id="past-experience-submit" class="btn btn-primary"
                                             type="submit" style="margin-bottom: 5px;">Save</button>
                                 </div>
