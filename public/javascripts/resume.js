@@ -15,6 +15,18 @@ function researchInterestCallback() {
     $('#research-interests-readable-text').html(newValue);
 }
 
+function expertiseCallback() {
+    var readableList = $('#expertise-readable-text ul');
+
+    readableList.empty();
+    $('#expertise-list li').each(function() {
+        var newValue = $(this).find('input').val(),
+            newListGroup = '<li class="list-group-item">' + newValue + "</li>";
+
+        readableList.append(newListGroup);
+    });
+}
+
 function formPastExperienceRequest() {
     var pastExperience = [];
 
@@ -28,6 +40,16 @@ function formPastExperienceRequest() {
     });
 
     return pastExperience;
+}
+
+function formExpertiseRequest() {
+    var expertise = [];
+
+    $('#expertise-list li').each(function() {
+        expertise.push($(this).find('input').val());
+    });
+
+    return expertise;
 }
 
 function handleRemovePastExperience(elem) {
@@ -51,7 +73,7 @@ $(document).ready(function() {
         {edit: '#summary-edit-link', cancel: '#summary-submit-cancel', form: '#summary-info-form', successCallback: summaryCallback},
         {edit: '#research-interests-edit-link', cancel: '#research-info-submit-cancel', form: '#research-interests-info-form', successCallback: researchInterestCallback},
         {edit: '#past-experience-edit-link', cancel: '#past-experience-submit-cancel', form: '#past-experience-info-form', dataCallback: formPastExperienceRequest},
-        {edit: '#expertise-edit-link', cancel: '#expertise-submit-cancel', form: '#expertise-info-form'},
+        {edit: '#expertise-edit-link', cancel: '#expertise-submit-cancel', form: '#expertise-info-form', dataCallback: formExpertiseRequest, successCallback: expertiseCallback},
         {edit: '#language-tech-edit-link', cancel: '#language-tech-submit-cancel', form: '#language-tech-info-form'},
         {edit: '#education-edit-link', cancel: '#education-submit-cancel', form: '#education-info-form'}];
 
@@ -64,6 +86,12 @@ $(document).ready(function() {
         $(this).parent().remove();
         editors[index].removeInstance(textElem[0]);
         editors.splice(index, 1);
+    });
+
+    $(document).on('click', '.remove-expertise', function(e) {
+        e.preventDefault();
+        var parentListEl = $(this).parent().parent();
+        parentListEl.remove();
     });
 
     $('#past-experience-list').children().each(function() {

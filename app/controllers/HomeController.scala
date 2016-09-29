@@ -157,4 +157,15 @@ class HomeController @Inject()(db: Database) extends Controller with Secured {
       BadRequest(Json.obj("status" -> "Failure"))
     }
   }
+
+  def update_expertise_info = withAuth { username => implicit request =>
+    request.body.asJson.map { json =>
+      val expertiseList = json.as[List[String]]
+
+      resumeDao.updateExpertise("data/resume.json", expertiseList)
+      Ok(Json.obj("status" -> "Success"))
+    }.getOrElse {
+      BadRequest(Json.obj("status" -> "Failure"))
+    }
+  }
 }

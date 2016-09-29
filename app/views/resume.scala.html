@@ -81,7 +81,7 @@
                                                 <input type="text" name="@name" class="form-control editable-mode" value="@text" style="display: none;"/>
                                                 <span class="locked-mode">@text</span>
                                             } else {
-                                                @name
+                                                @text
                                             }
                                         }
                                         <li class="list-group-item">@resumeEditableText(resume.name, "resumeName")</li>
@@ -186,6 +186,22 @@
                             </ul>
                         </div>
                         @if(isAdmin) {
+                                <div class="editable-mode">
+                                    <ul id="expertise-list" class="list-group">
+                                        @for(point <- resume.expertise) {
+                                            <li class="list-group-item row">
+                                                <div class="col-md-11">
+                                                    <input type="text" value="@point" class="form-control" />
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <button type="button" class="btn btn-link remove-expertise" style="color: #c51111;">
+                                                        <span class="glyphicon glyphicon-remove"></span>
+                                                    </button>
+                                                </div>
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
                                 @buttonForEditSave("expertise-submit")
                             </form>
                         }

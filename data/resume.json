@@ -1,5 +1,5 @@
 {
-  "lastUpdated" : 1474226803,
+  "lastUpdated" : 1475134335,
   "profileImageUrl" : "http://placehold.it/250x250",
   "name" : "Jeremy Lord Esquire III",
   "jobTitle" : "Software Engineer II",
@@ -11,20 +11,25 @@
   "pastExperience" : [ {
     "jobTitle" : "Software Engineering Intern",
     "company" : "Amazon.com",
-    "description" : "Fusce ex nibh, pellentesque vitae pellentesque at, malesuada efficitur augue. Maecenas consequat ultrices sodales. Integer congue ligula in posuere auctor. Cras pretium nibh at nisi mattis, nec sodales magna suscipit. Sed pretium dui nec porta cursus.",
+    "description" : "\n                                            \n                                            Fusce ex nibh, pellentesque vitae pellentesque at, malesuada efficitur augue. Maecenas consequat ultrices sodales. Integer congue ligula in posuere auctor. Cras pretium nibh at nisi mattis, nec sodales magna suscipit. Sed pretium dui nec porta cursus.\n                                        \n                                        ",
     "additionalPoints" : [ ]
   }, {
     "jobTitle" : "Software Engineering Intern",
     "company" : "Broadcom",
-    "description" : "Duis viverra, ligula a sollicitudin convallis, risus arcu tempor dui, id ultrices purus elit sed nunc. Nam vitae dapibus diam. Donec aliquam ullamcorper lobortis. Duis faucibus commodo molestie.",
+    "description" : "\n                                            \n                                            Duis viverra, ligula a sollicitudin convallis, risus arcu tempor dui, id ultrices purus elit sed nunc. Nam vitae dapibus diam. Donec aliquam ullamcorper lobortis. Duis faucibus commodo molestie.\n                                        \n                                        ",
     "additionalPoints" : [ ]
   }, {
     "jobTitle" : "Bahamut",
     "company" : "Valhalla",
-    "description" : "Duis viverra, ligula a sollicitudin convallis, risus arcu tempor dui, id ultrices purus elit sed nunc. Nam vitae dapibus diam. Donec aliquam ullamcorper lobortis. Duis faucibus commodo molestie.",
+    "description" : "\n                                            \n                                            Duis viverra, ligula a sollicitudin convallis, risus arcu tempor dui, id ultrices purus elit sed nunc. Nam vitae dapibus diam. Donec aliquam ullamcorper lobortis. Duis faucibus commodo molestie.\n                                        \n                                        ",
+    "additionalPoints" : [ ]
+  }, {
+    "jobTitle" : "Another Test",
+    "company" : "Badabushka",
+    "description" : "Hello World!",
     "additionalPoints" : [ ]
   } ],
-  "expertise" : [ "Lorem ipsum dolor sit amet, consectetur adipiscing elit", "Lorem ipsum dolor sit amet, consectetur adipiscing elit", "Lorem ipsum dolor sit amet, consectetur adipiscing elit", "Lorem ipsum dolor sit amet, consectetur adipiscing elit", "Lorem ipsum dolor sit amet, consectetur adipiscing elit", "Lorem ipsum dolor sit amet, consectetur adipiscing elit" ],
+  "expertise" : [ "Hello World!", "Being an excellent listener", "Bear fighting", "Lorem ipsum dolor sit amet, consectetur adipiscing elit", "Lorem ipsum dolor sit amet, consectetur adipiscing elit" ],
   "skillBars" : [ {
     "skill" : "Java/JavaEE/Spring Framework",
     "progress" : 80,
