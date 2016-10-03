@@ -16,8 +16,13 @@
     </div>
 }
 
-@buttonForEditSave(buttonId: String) = {
+@buttonForEditSave(buttonId: String, addButtonId: Option[String]) = {
     <div align="right" style="display: none;">
+        @if(addButtonId.isDefined) {
+            <button id="@addButtonId.get" class="btn btn-link" type="button" style="color: green;">
+                <span class="glyphicon glyphicon-plus"></span>
+            </button>
+        }
         <button id="@(buttonId)-cancel" class="btn btn-default"
                 type="button" style="margin-bottom: 5px;">Cancel</button>
         <button id="@buttonId" class="btn btn-primary"
@@ -48,6 +53,31 @@
             <br>
             <label>Company</label><input type="text" value="" class="form-control" />
             <br>
+        </li>
+        <li id="expertise-item-cloneable" class="list-group-item row" style="display: none;">
+            <div class="col-md-11">
+                <input type="text" value="" class="form-control" />
+            </div>
+            <div class="col-md-1">
+                <button type="button" class="btn btn-link remove-expertise" style="color: #c51111;">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </button>
+            </div>
+        </li>
+        <li id="language-tech-item-cloneable" class="list-group-item row">
+            <div class="col-md-10">
+                <label>Skill/Technology</label>
+                <input type="text" value="" class="form-control" />
+            </div>
+            <div class="col-md-1">
+                <label>Skill %</label>
+                <input type="number" value="" min="0" max="100" step="1" class="form-control"/>
+            </div>
+            <div class="col-md-1">
+                <button type="button" class="btn btn-link remove-tech-skill" style="color: #c51111;">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </button>
+            </div>
         </li>
     }
     <div class="resume">
@@ -91,7 +121,7 @@
                                         <li class="list-group-item"><span class="glyphicon glyphicon-envelope"></span> @resumeEditableText(resume.email, "resumeEmail")</li>
                                     </ul>
                                     @if(isAdmin) {
-                                            @buttonForEditSave("top-level-info-submit")
+                                            @buttonForEditSave("top-level-info-submit", None)
                                         </form>
                                     }
                                 </div>
@@ -110,7 +140,7 @@
                                 <div id="summary-editable-text" class="editable-mode">
                                     <textarea name="summaryContent" rows="10" cols="100">@resume.summary</textarea>
                                 </div>
-                                @buttonForEditSave("summary-submit")
+                                @buttonForEditSave("summary-submit", None)
                             </form>
                         }
                     </div>
@@ -126,7 +156,7 @@
                                 <div id="research-interests-editable-text" class="editable-mode">
                                     <textarea name="researchInterestContent" rows="5" cols="100">@resume.researchInterests</textarea>
                                 </div>
-                                @buttonForEditSave("research-info-submit")
+                                @buttonForEditSave("research-info-submit", None)
                             </form>
                         }
                     </div>
@@ -161,15 +191,7 @@
                                         }
                                     </ul>
                                 </div>
-                                <div align="right" style="display: none;">
-                                    <button id="add-new-experience-button" class="btn btn-link" type="button" style="color: green;">
-                                        <span class="glyphicon glyphicon-plus"></span>
-                                    </button>
-                                    <button id="past-experience-submit-cancel" class="btn btn-default"
-                                            type="button" style="margin-bottom: 5px;">Cancel</button>
-                                    <button id="past-experience-submit" class="btn btn-primary"
-                                            type="submit" style="margin-bottom: 5px;">Save</button>
-                                </div>
+                                @buttonForEditSave("past-experience-submit", Some("add-new-experience-button"))
                             </form>
                         }
                     </div>
@@ -202,7 +224,7 @@
                                         }
                                     </ul>
                                 </div>
-                                @buttonForEditSave("expertise-submit")
+                                @buttonForEditSave("expertise-submit", Some("expertise-add-button"))
                             </form>
                         }
                     </div>
@@ -233,7 +255,28 @@
                             </ul>
                         </div>
                         @if(isAdmin) {
-                                @buttonForEditSave("language-tech-submit")
+                            <div class="editable-mode">
+                                <ul id="language-and-tech-list" class="list-group">
+                                    @for(skill <- resume.skillBars) {
+                                        <li class="list-group-item row">
+                                            <div class="col-md-10">
+                                                <label>Skill/Technology</label>
+                                                <input type="text" value="@skill.skill" class="form-control" />
+                                            </div>
+                                            <div class="col-md-1">
+                                                <label>Skill %</label>
+                                                <input type="number" value="@skill.progress" min="0" max="100" step="1" class="form-control"/>
+                                            </div>
+                                            <div class="col-md-1">
+                                                <button type="button" class="btn btn-link remove-tech-skill" style="color: #c51111;">
+                                                    <span class="glyphicon glyphicon-remove"></span>
+                                                </button>
+                                            </div>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                                @buttonForEditSave("language-tech-submit", Some("language-tech-add-button"))
                             </form>
                         }
                     </div>
@@ -261,7 +304,7 @@
                             </tbody>
                         </table>
                         @if(isAdmin) {
-                                @buttonForEditSave("education-submit")
+                                @buttonForEditSave("education-submit", None)
                             </form>
                         }
                     </div>

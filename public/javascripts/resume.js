@@ -94,6 +94,12 @@ $(document).ready(function() {
         parentListEl.remove();
     });
 
+    $(document).on('click', '.remove-tech-skill', function(e) {
+        e.preventDefault();
+        var parentListEl = $(this).parent().parent();
+        parentListEl.remove();
+    });
+
     $('#past-experience-list').children().each(function() {
         var editorInd = editors.length;
         var description = $('#experience-readable-text').find('.list-group-item').eq($(this).index()).find('.past-experience-description').html();
@@ -164,5 +170,17 @@ $(document).ready(function() {
         $('#past-experience-list').append(lastListItem);
         lastListItem.show();
         editors[lastListItem.index()] = addDynamicEditor(lastListItem);
+    });
+
+    $('#expertise-add-button').click(function() {
+        var lastListItem = $('#expertise-item-cloneable').clone();
+        $('#expertise-list').append(lastListItem);
+        lastListItem.show();
+    });
+
+    $('#language-tech-add-button').click(function() {
+        var lastListItem = $('#language-tech-item-cloneable').clone();
+        $('#language-and-tech-list').append(lastListItem);
+        lastListItem.show();
     });
 });

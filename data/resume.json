@@ -1,5 +1,5 @@
 {
-  "lastUpdated" : 1475134335,
+  "lastUpdated" : 1475454630,
   "profileImageUrl" : "http://placehold.it/250x250",
   "name" : "Jeremy Lord Esquire III",
   "jobTitle" : "Software Engineer II",
@@ -29,7 +29,7 @@
     "description" : "Hello World!",
     "additionalPoints" : [ ]
   } ],
-  "expertise" : [ "Hello World!", "Being an excellent listener", "Bear fighting", "Lorem ipsum dolor sit amet, consectetur adipiscing elit", "Lorem ipsum dolor sit amet, consectetur adipiscing elit" ],
+  "expertise" : [ "Hello World!", "Being an excellent listener", "Bear fighting", "Lorem ipsum dolor sit amet, consectetur adipiscing elit" ],
   "skillBars" : [ {
     "skill" : "Java/JavaEE/Spring Framework",
     "progress" : 80,
