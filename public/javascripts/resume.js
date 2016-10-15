@@ -28,10 +28,10 @@ function expertiseCallback() {
 }
 
 function languageSkillsCallback() {
-    var readableList = $('#language-tech-readable-text.skill-list');
+    var readableList = $('#language-tech-readable-text').find('.skill-list');
 
     readableList.empty();
-     $('#language-and-tech-list').each(function() {
+     $('#language-and-tech-list li').each(function() {
         var newSkill = $(this).find('[name="skill"]').val(),
             newProgress = $(this).find('[name="progress"]').val(),
             newElement = $('<div class="progress"></div>'),
@@ -54,6 +54,24 @@ function languageSkillsCallback() {
         newElement.append(innerDiv);
         readableList.append(newElement);
      });
+}
+
+function educationCallback() {
+    var readableList = $('#education-readable-text');
+
+    readableList.empty();
+    $('#education-list li').each(function() {
+        var newDegree = $(this).find('[name="degree"]').val(),
+            newYear = $(this).find('[name="year"]').val(),
+            newGpa = $(this).find('[name="gpa"]').val(),
+            newElement = $('<tr></tr>');
+
+            newElement.append('<td>' + newDegree + "</td>");
+            newElement.append('<td>' + newYear + "</td>");
+            newElement.append('<td>' + newGpa + "</td>");
+
+            readableList.append(newElement);
+    });
 }
 
 function formPastExperienceRequest() {
@@ -91,8 +109,21 @@ function formLanguageTechSkillRequest() {
         languageTechSkills.push({skill: newSkill, progress: newProgress});;
     });
 
-    console.log("Language tech skills: ") + languageTechSkills;
     return languageTechSkills;
+}
+
+function formEducationRequest() {
+    var education = [];
+
+    $('#education-list li').each(function() {
+        var newDegree = $(this).find('[name="degree"]').val(),
+            newYear = parseInt($(this).find('[name="year"]').val(), 10),
+            newGpa = $(this).find('[name="gpa"]').val();
+
+        education.push({degree: newDegree, year: newYear, gpa: newGpa});
+    });
+
+    return education;
 }
 
 function handleRemovePastExperience(elem) {
@@ -118,7 +149,7 @@ $(document).ready(function() {
         {edit: '#past-experience-edit-link', cancel: '#past-experience-submit-cancel', form: '#past-experience-info-form', dataCallback: formPastExperienceRequest},
         {edit: '#expertise-edit-link', cancel: '#expertise-submit-cancel', form: '#expertise-info-form', dataCallback: formExpertiseRequest, successCallback: expertiseCallback},
         {edit: '#language-tech-edit-link', cancel: '#language-tech-submit-cancel', form: '#language-tech-info-form', dataCallback: formLanguageTechSkillRequest, successCallback: languageSkillsCallback},
-        {edit: '#education-edit-link', cancel: '#education-submit-cancel', form: '#education-info-form'}];
+        {edit: '#education-edit-link', cancel: '#education-submit-cancel', form: '#education-info-form', dataCallback: formEducationRequest, successCallback: educationCallback}];
 
     var editors = [];
 
@@ -138,6 +169,12 @@ $(document).ready(function() {
     });
 
     $(document).on('click', '.remove-tech-skill', function(e) {
+        e.preventDefault();
+        var parentListEl = $(this).parent().parent();
+        parentListEl.remove();
+    });
+
+    $(document).on('click', '.remove-education', function(e) {
         e.preventDefault();
         var parentListEl = $(this).parent().parent();
         parentListEl.remove();
@@ -224,6 +261,12 @@ $(document).ready(function() {
     $('#language-tech-add-button').click(function() {
         var lastListItem = $('#language-tech-item-cloneable').clone();
         $('#language-and-tech-list').append(lastListItem);
+        lastListItem.show();
+    });
+
+    $('#education-add-button').click(function() {
+        var lastListItem = $('#education-item-cloneable').clone();
+        $('#education-list').append(lastListItem);
         lastListItem.show();
     });
 });

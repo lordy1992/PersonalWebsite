@@ -177,11 +177,31 @@ class HomeController @Inject()(db: Database) extends Controller with Secured {
       ).tupled
 
       val languageTechList = json.as[List[(String, Int)]]
-      val skillBars = languageTechList.map { case (skill, progress) =>
+      val skillBars =  languageTechList.sortBy(- _._2).map { case (skill, progress) =>
         SkillBar(skill, progress)
       }
 
       resumeDao.updateSkillBars("data/resume.json", skillBars)
+      Ok(Json.obj("status" -> "Success"))
+    }.getOrElse {
+      BadRequest(Json.obj("status" -> "Failure"))
+    }
+  }
+
+  def update_education = withAuth { username => implicit request =>
+    request.body.asJson.map { json =>
+      implicit val educationReader: Reads[(String, Int, String)] = (
+        (JsPath \ "degree").read[String] and
+        (JsPath \ "year").read[Int] and
+        (JsPath \ "gpa").read[String]
+      ).tupled
+
+      val educationList = json.as[List[(String, Int, String)]]
+      val education = educationList.map { case (degree, year, gpa) =>
+        Education(degree, year, gpa)
+      }
+
+      resumeDao.updateEducation("data/resume.json", education)
       Ok(Json.obj("status" -> "Success"))
     }.getOrElse {
       BadRequest(Json.obj("status" -> "Failure"))

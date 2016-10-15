@@ -22,5 +22,6 @@ POST    /resume/update-research-interests   controllers.HomeController.update_re
 POST    /resume/update-past-experience      controllers.HomeController.update_past_experience
 POST    /resume/update-expertise-info       controllers.HomeController.update_expertise_info
 POST    /resume/update-language-and-tech    controllers.HomeController.update_language_tech_info
+POST    /resume/update-education            controllers.HomeController.update_education
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
