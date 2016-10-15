@@ -153,6 +153,10 @@ $(document).ready(function() {
 
     var editors = [];
 
+    $('#resume-profile-img').on('error', function() {
+        $(this).attr('src', 'http://placehold.it/250x250');
+    });
+
     $(document).on('click', '.remove-exp', function(e) {
         e.preventDefault();
         var index = $(this).parent().index();

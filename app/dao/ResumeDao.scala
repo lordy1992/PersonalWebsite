@@ -169,6 +169,13 @@ class ResumeDao {
     writeResumeToJson(path, modifiedResume)
   }
 
+  def updateProfileImage(path: String, fileRelativePath: String) = {
+    val (resume, newTimeStamp) = fetchResumeForModification(path)
+    val modifiedResume = resume.copy(lastUpdated = newTimeStamp, profileImageUrl = fileRelativePath)
+
+    writeResumeToJson(path, modifiedResume)
+  }
+
   private def fetchResumeForModification(path: String) : (Resume, Long) = {
     val resume = getResumeFromJson(path)
     val newTimeStamp = System.currentTimeMillis() / 1000

@@ -207,4 +207,29 @@ class HomeController @Inject()(db: Database) extends Controller with Secured {
       BadRequest(Json.obj("status" -> "Failure"))
     }
   }
+
+  def upload_resume_image = withAuth(parse.multipartFormData) { username => implicit request =>
+    request.body.file("profileImage").map { profileImage =>
+      import java.io.File
+      val filename = profileImage.filename
+      if (profileImage.contentType.isDefined && extensionFromContentType.isDefinedAt(profileImage.contentType.get)) {
+        val extension = extensionFromContentType(profileImage.contentType.get)
+        val fileRelativePath = "images/profile-image" + extension
+        val dataPath = new File(play.Environment.simple().rootPath(), "/public/" + fileRelativePath)
+        profileImage.ref.moveTo(dataPath)
+        resumeDao.updateProfileImage("data/resume.json", fileRelativePath)
+        Ok(views.html.resume(resumeDao.getResumeFromJson("data/resume.json"), true, true))
+      } else {
+        UnsupportedMediaType("File type not accepted")
+      }
+    }.getOrElse {
+      BadRequest("File not uploaded")
+    }
+  }
+
+  private val extensionFromContentType: PartialFunction[String, String] = {
+    case "image/bmp" => ".bmp"
+    case "image/jpeg" => ".jpg"
+    case "image/png" => ".png"
+  }
 }

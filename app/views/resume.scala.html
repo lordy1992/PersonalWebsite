@@ -127,8 +127,14 @@
                                 }
                                 <div class="col-xs-12 col-sm-3">
                                     <figure>
-                                        <img class="img-circle img-responsive" alt="" src="@resume.profileImageUrl">
+                                        <img id="resume-profile-img" class="img-circle img-responsive" alt="" src="@routes.Assets.versioned(resume.profileImageUrl)">
                                     </figure>
+                                    @if(isAdmin) {
+                                        @helper.form(action = routes.HomeController.upload_resume_image, 'enctype -> "multipart/form-data") {
+                                            <input type="file" name="profileImage">
+                                            <p><input type="submit"></p>
+                                        }
+                                    }
                                 </div>
                                 <div class="col-xs-12 col-sm-9">
                                     @if(isAdmin) {
@@ -290,11 +296,11 @@
                                 <ul id="language-and-tech-list" class="list-group">
                                     @for(skill <- resume.skillBars) {
                                         <li class="list-group-item row">
-                                            <div class="col-md-10">
+                                            <div class="col-md-9">
                                                 <label>Skill/Technology</label>
                                                 <input type="text" value="@skill.skill" name="skill" class="form-control" />
                                             </div>
-                                            <div class="col-md-1">
+                                            <div class="col-md-2">
                                                 <label>Skill %</label>
                                                 <input type="number" value="@skill.progress" name="progress" min="0" max="100" step="1" class="form-control"/>
                                             </div>

@@ -10,9 +10,13 @@ trait Secured {
 
   def onUnauthorized(request: RequestHeader) = Results.Redirect(routes.AuthController.login)
 
-  def withAuth(f: => String => Request[AnyContent] => Result) = {
+  def withAuth(f: => String => Request[AnyContent] => Result) : EssentialAction = {
+    withAuth(BodyParsers.parse.anyContent)(f)
+  }
+
+  def withAuth[A](p: BodyParser[A])(f: => String => Request[A] => Result) = {
     Security.Authenticated(username, onUnauthorized) { user =>
-      Action(request => f(user)(request))
+      Action(p)(request => f(user)(request))
     }
   }
 }
