@@ -36,6 +36,16 @@
         </button>
 }
 
+@progressBarType(progress: Int) = @{
+    if (progress > 50) {
+        "success"
+    } else if (progress > 25) {
+        "warning"
+    } else {
+        "danger"
+    }
+}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -64,14 +74,14 @@
                 </button>
             </div>
         </li>
-        <li id="language-tech-item-cloneable" class="list-group-item row">
+        <li id="language-tech-item-cloneable" class="list-group-item row" style="display: none;">
             <div class="col-md-10">
                 <label>Skill/Technology</label>
-                <input type="text" value="" class="form-control" />
+                <input type="text" value="" name="skill" class="form-control" />
             </div>
             <div class="col-md-1">
                 <label>Skill %</label>
-                <input type="number" value="" min="0" max="100" step="1" class="form-control"/>
+                <input type="number" value="" name="progress" min="0" max="100" step="1" class="form-control"/>
             </div>
             <div class="col-md-1">
                 <button type="button" class="btn btn-link remove-tech-skill" style="color: #c51111;">
@@ -236,15 +246,17 @@
                         <div id="language-tech-readable-text" class="locked-mode">
                             <ul class="list-group">
                                 <a class="list-group-item inactive-link" href="#">
-                                    @for(skill <- resume.skillBars) {
-                                        <div class="progress">
-                                            <div data-placement="top" style="width: @(skill.progress)%;" aria-valuemax="100" aria-valuemin="0"
-                                                 aria-valuenow="@skill.progress" role="progressbar" class="progress-bar progress-bar-@skill.style">
-                                                <span class="sr-only">@(skill.progress)%</span>
-                                                <span class="progress-type">@skill.skill</span>
+                                    <div class="skill-list">
+                                        @for(skill <- resume.skillBars) {
+                                            <div class="progress">
+                                                <div data-placement="top" style="width: @(skill.progress)%;" aria-valuemax="100" aria-valuemin="0"
+                                                     aria-valuenow="@skill.progress" role="progressbar" class="progress-bar progress-bar-@progressBarType(skill.progress)">
+                                                    <span class="sr-only">@(skill.progress)%</span>
+                                                    <span class="progress-type">@skill.skill</span>
+                                                </div>
                                             </div>
-                                        </div>
                                     }
+                                    </div>
                                     <div class="progress-meter">
                                         <div style="width: 25%;" class="meter meter-left"><span class="meter-text">Beginner</span> </div>
                                         <div style="width: 25%;" class="meter meter-left"><span class="meter-text">Novice</span> </div>
@@ -261,11 +273,11 @@
                                         <li class="list-group-item row">
                                             <div class="col-md-10">
                                                 <label>Skill/Technology</label>
-                                                <input type="text" value="@skill.skill" class="form-control" />
+                                                <input type="text" value="@skill.skill" name="skill" class="form-control" />
                                             </div>
                                             <div class="col-md-1">
                                                 <label>Skill %</label>
-                                                <input type="number" value="@skill.progress" min="0" max="100" step="1" class="form-control"/>
+                                                <input type="number" value="@skill.progress" name="progress" min="0" max="100" step="1" class="form-control"/>
                                             </div>
                                             <div class="col-md-1">
                                                 <button type="button" class="btn btn-link remove-tech-skill" style="color: #c51111;">

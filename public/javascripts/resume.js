@@ -27,6 +27,35 @@ function expertiseCallback() {
     });
 }
 
+function languageSkillsCallback() {
+    var readableList = $('#language-tech-readable-text.skill-list');
+
+    readableList.empty();
+     $('#language-and-tech-list').each(function() {
+        var newSkill = $(this).find('[name="skill"]').val(),
+            newProgress = $(this).find('[name="progress"]').val(),
+            newElement = $('<div class="progress"></div>'),
+            innerDiv = $('<div data-placement="top" aria-valuemax="100" aria-valuemin="0" role="progressbar"></div>'),
+            progressInt = parseInt(newProgress, 10),
+            styleName = 'danger';
+
+        if (progressInt >= 50) {
+            styleName = 'success';
+        } else if (progressInt >= 25) {
+            styleName = 'warning';
+        }
+
+        innerDiv.attr('style', 'width: ' + newProgress + '%;');
+        innerDiv.attr('aria-valuenow', newProgress);
+        innerDiv.attr('class', 'progress-bar progress-bar-' + styleName);
+        innerDiv.append('<span class="sr-only">' + newProgress + '%</span>');
+        innerDiv.append('<span class="progress-type">' + newSkill + '</span>');
+
+        newElement.append(innerDiv);
+        readableList.append(newElement);
+     });
+}
+
 function formPastExperienceRequest() {
     var pastExperience = [];
 
@@ -52,6 +81,20 @@ function formExpertiseRequest() {
     return expertise;
 }
 
+function formLanguageTechSkillRequest() {
+    var languageTechSkills = [];
+
+    $('#language-and-tech-list li').each(function() {
+        var newSkill = $(this).find('[name="skill"]').val(),
+            newProgress = parseInt($(this).find('[name="progress"]').val(), 10);
+
+        languageTechSkills.push({skill: newSkill, progress: newProgress});;
+    });
+
+    console.log("Language tech skills: ") + languageTechSkills;
+    return languageTechSkills;
+}
+
 function handleRemovePastExperience(elem) {
     $(elem).parent().remove();
 }
@@ -74,7 +117,7 @@ $(document).ready(function() {
         {edit: '#research-interests-edit-link', cancel: '#research-info-submit-cancel', form: '#research-interests-info-form', successCallback: researchInterestCallback},
         {edit: '#past-experience-edit-link', cancel: '#past-experience-submit-cancel', form: '#past-experience-info-form', dataCallback: formPastExperienceRequest},
         {edit: '#expertise-edit-link', cancel: '#expertise-submit-cancel', form: '#expertise-info-form', dataCallback: formExpertiseRequest, successCallback: expertiseCallback},
-        {edit: '#language-tech-edit-link', cancel: '#language-tech-submit-cancel', form: '#language-tech-info-form'},
+        {edit: '#language-tech-edit-link', cancel: '#language-tech-submit-cancel', form: '#language-tech-info-form', dataCallback: formLanguageTechSkillRequest, successCallback: languageSkillsCallback},
         {edit: '#education-edit-link', cancel: '#education-submit-cancel', form: '#education-info-form'}];
 
     var editors = [];

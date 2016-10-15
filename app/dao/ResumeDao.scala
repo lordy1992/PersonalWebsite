@@ -28,8 +28,7 @@ class ResumeDao {
 
     implicit val skillBarReads: Reads[SkillBar] = (
       (JsPath \ "skill").read[String] and
-      (JsPath \ "progress").read[Int] and
-      (JsPath \ "style").read[String]
+      (JsPath \ "progress").read[Int]
     )(SkillBar.apply _)
 
     implicit val pastExperienceReads: Reads[Experience] = (
@@ -67,8 +66,7 @@ class ResumeDao {
 
     implicit val skillBarWrites: Writes[SkillBar] = (
       (JsPath \ "skill").write[String] and
-      (JsPath \ "progress").write[Int] and
-      (JsPath \ "style").write[String]
+      (JsPath \ "progress").write[Int]
     )(unlift(SkillBar.unapply))
 
     implicit val pastExperienceReads: Writes[Experience] = (
@@ -153,6 +151,13 @@ class ResumeDao {
   def updateExpertise(path: String, expertise: Seq[String]) : Unit = {
     val (resume, newTimeStamp) = fetchResumeForModification(path)
     val modifiedResume = resume.copy(lastUpdated = newTimeStamp, expertise = expertise)
+
+    writeResumeToJson(path, modifiedResume)
+  }
+
+  def updateSkillBars(path: String, skillBars: List[SkillBar]) : Unit = {
+    val (resume, newTimeStamp) = fetchResumeForModification(path)
+    val modifiedResume = resume.copy(lastUpdated = newTimeStamp, skillBars = skillBars)
 
     writeResumeToJson(path, modifiedResume)
   }

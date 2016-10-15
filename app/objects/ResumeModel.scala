@@ -22,8 +22,7 @@ case class Experience(val jobTitle: String,
                       val additionalPoints: Seq[String]) extends ResumeModel
 
 case class SkillBar(val skill: String,
-                    val progress: Int,
-                    val style: String) extends ResumeModel
+                    val progress: Int) extends ResumeModel
 
 case class Education(val degree: String,
                      val year: Int,

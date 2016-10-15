@@ -1,5 +1,5 @@
 {
-  "lastUpdated" : 1475454630,
+  "lastUpdated" : 1476515939,
   "profileImageUrl" : "http://placehold.it/250x250",
   "name" : "Jeremy Lord Esquire III",
   "jobTitle" : "Software Engineer II",
@@ -32,28 +32,25 @@
   "expertise" : [ "Hello World!", "Being an excellent listener", "Bear fighting", "Lorem ipsum dolor sit amet, consectetur adipiscing elit" ],
   "skillBars" : [ {
     "skill" : "Java/JavaEE/Spring Framework",
-    "progress" : 80,
-    "style" : "success"
+    "progress" : 80
   }, {
     "skill" : "C++",
-    "progress" : 80,
-    "style" : "success"
+    "progress" : 80
   }, {
     "skill" : "Javascript",
-    "progress" : 70,
-    "style" : "success"
+    "progress" : 70
   }, {
     "skill" : "Python",
-    "progress" : 70,
-    "style" : "success"
+    "progress" : 70
   }, {
     "skill" : "Scala",
-    "progress" : 40,
-    "style" : "warning"
+    "progress" : 40
   }, {
     "skill" : "Go",
-    "progress" : 20,
-    "style" : "danger"
+    "progress" : 20
+  }, {
+    "skill" : "Spring MVC",
+    "progress" : 40
   } ],
   "education" : [ {
     "degree" : "Bachelor's in Computer Engineering",
