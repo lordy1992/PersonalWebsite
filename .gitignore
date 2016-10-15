@@ -18,3 +18,4 @@ target
 *.sbtserver
 /data/backups/*.json
 /tmp/*.json
+/public/images/profile-image.*
