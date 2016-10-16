@@ -1,5 +1,4 @@
-@(title: String, stylesheet: String = "stylesheets/main.css", shortcut: String = "images/favicon.png",
-    javascript: String = "javascripts/hello.js")
+@(title: String, stylesheet: String = "stylesheets/main.css", shortcut: String = "images/favicon.png")
 
 @* This is the boiler-plate preamble that goes into the head of every page. *@
 <meta charset="utf-8">
@@ -20,4 +19,3 @@
 
 <link rel="stylesheet" media="screen" href="@routes.Assets.versioned(stylesheet)">
 <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned(shortcut)">
-<script src="@routes.Assets.versioned(javascript)" type="text/javascript"></script>
