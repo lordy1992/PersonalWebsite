@@ -32,15 +32,30 @@
                     }
                 </div>
                 <div class="progress-meter">
-                    <div style="width: 25%;" class="meter meter-left"><span class="meter-text">Beginner</span> </div>
-                    <div style="width: 25%;" class="meter meter-left"><span class="meter-text">Novice</span> </div>
-                    <div style="width: 25%;" class="meter meter-right"><span class="meter-text">Advanced</span> </div>
-                    <div style="width: 25%;" class="meter meter-right"><span class="meter-text">Good</span> </div>
+                    <div class="meter meter-left"><span class="meter-text">Beginner</span> </div>
+                    <div class="meter meter-left"><span class="meter-text">Novice</span> </div>
+                    <div class="meter meter-right"><span class="meter-text">Advanced</span> </div>
+                    <div class="meter meter-right"><span class="meter-text">Good</span> </div>
                 </div>
             </a>
         </ul>
     </div>
     @if(isAdmin) {
+        <li id="language-tech-item-cloneable" class="list-group-item row cloneable">
+            <div class="col-md-10">
+                <label>Skill/Technology</label>
+                <input type="text" value="" name="skill" class="form-control" />
+            </div>
+            <div class="col-md-1">
+                <label>Skill %</label>
+                <input type="number" value="" name="progress" min="0" max="100" step="1" class="form-control"/>
+            </div>
+            <div class="col-md-1">
+                <button type="button" class="btn btn-link remove-btn remove-tech-skill">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </button>
+            </div>
+        </li>
         <form action="/resume/update-language-and-tech" method="post">
             <div class="editable-mode">
                 <ul id="language-and-tech-list" class="list-group">
@@ -55,7 +70,7 @@
                                 <input type="number" value="@skill.progress" name="progress" min="0" max="100" step="1" class="form-control"/>
                             </div>
                             <div class="col-md-1">
-                                <button type="button" class="btn btn-link remove-tech-skill" style="color: #c51111;">
+                                <button type="button" class="btn btn-link remove-btn remove-tech-skill">
                                     <span class="glyphicon glyphicon-remove"></span>
                                 </button>
                             </div>

@@ -5,13 +5,13 @@
  * the header information, as well as the profile picture. This contains the html for the editable and locked portion
  * of this view.
  *@
-<div id="top-level-info-section" class="panel-heading resume-heading">
+<div id="top-level-info-section" class="panel-heading">
     <div class="row">
         <div class="col-lg-12">
             @if(isAdmin) {
-            <div align="right" style="padding-right: 15px;">
-                <button id="top-level-info-edit-link" type="button" class="btn btn-link">Edit</button>
-            </div>
+                <div align="right" class="heading-edit">
+                    <button id="top-level-info-edit-link" type="button" class="btn btn-link">Edit</button>
+                </div>
             }
             <div class="col-xs-12 col-sm-3">
                 <figure>
@@ -31,7 +31,7 @@
                 <ul id="top-level-info-list" class="list-group">
                     @resumeEditableText(text: String, name: String) = {
                         @if(isAdmin) {
-                            <input type="text" name="@name" class="form-control editable-mode" value="@text" style="display: none;"/>
+                            <input type="text" name="@name" class="form-control editable-mode" value="@text" />
                             <span class="locked-mode">@text</span>
                         } else {
                             @text

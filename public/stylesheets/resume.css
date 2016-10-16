@@ -76,6 +76,7 @@
 	border-width: 0px;
 	border-style: solid;
 	border-color: rgb(160, 160, 160);
+	width: 25%;
 }
 
 .progress-meter > .meter-left {
@@ -104,4 +105,45 @@
 
 .progress-meter > .meter.meter-right > .meter-text {
 	text-align: right;
+}
+
+.remove-btn {
+    color: #c51111;
+}
+
+.remove-exp {
+    float: right;
+    padding-top: 0px;
+    border-top: 0px;
+}
+
+.heading-edit {
+    padding-right: 15px;
+}
+
+#top-level-info-list .editable-mode {
+    display: none;
+}
+
+.cloneable {
+    display: none;
+}
+
+.edit-mode-only {
+    display: none;
+}
+
+.edit-btn {
+    float: right;
+    padding-top: 0px;
+    border-top: 0px;
+}
+
+.edit-save-panel > button {
+    margin-bottom: 5px;
+}
+
+.edit-save-panel > .btn-link {
+    margin-bottom: 0px;
+    color: green;
 }

@@ -25,6 +25,25 @@
         </tbody>
     </table>
     @if(isAdmin) {
+        <li id="education-item-cloneable" class="list-group-item row cloneable">
+            <div class="col-md-5">
+                <label>Degree</label>
+                <input type="text" value="" name="degree" class="form-control" />
+            </div>
+            <div class="col-md-3">
+                <label>Year</label>
+                <input type="number" value="" name="year" min="0" max="3000" step="1" class="form-control"/>
+            </div>
+            <div class="col-md-3">
+                <label>GPA</label>
+                <input type="text" value="" name="gpa" class="form-control"/>
+            </div>
+            <div class="col-md-1">
+                <button type="button" class="btn btn-link remove-btn remove-education">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </button>
+            </div>
+        </li>
         <form action="/resume/update-education" method="post">
             <div class="editable-mode">
                 <ul id="education-list">
@@ -43,7 +62,7 @@
                                 <input type="text" value="@eduEntry.gpa" name="gpa" class="form-control"/>
                             </div>
                             <div class="col-md-1">
-                                <button type="button" class="btn btn-link remove-education" style="color: #c51111;">
+                                <button type="button" class="btn btn-link remove-btn remove-education">
                                     <span class="glyphicon glyphicon-remove"></span>
                                 </button>
                             </div>

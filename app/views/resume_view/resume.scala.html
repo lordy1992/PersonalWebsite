@@ -3,37 +3,10 @@
 @import enums.MenuItems._
 @import java.util.Date
 
-@headerWithEditOption(header: String, editId: String) = {
-    <div class="row">
-        <div class="col-md-4"><h4>@header</h4></div>
-        @if(isAdmin) {
-            <div class="col-md-4 col-md-offset-4">
-                <button id="@editId" type="button" class="btn btn-link" style="float: right; padding-top: 0px; border-top: 0px;">
-                    Edit
-                </button>
-            </div>
-        }
-    </div>
-}
-
-@buttonForEditSave(buttonId: String, addButtonId: Option[String]) = {
-    <div align="right" style="display: none;">
-        @if(addButtonId.isDefined) {
-            <button id="@addButtonId.get" class="btn btn-link" type="button" style="color: green;">
-                <span class="glyphicon glyphicon-plus"></span>
-            </button>
-        }
-        <button id="@(buttonId)-cancel" class="btn btn-default"
-                type="button" style="margin-bottom: 5px;">Cancel</button>
-        <button id="@buttonId" class="btn btn-primary"
-                type="submit" style="margin-bottom: 5px;">Save</button>
-    </div>
-}
-
-@buttonForRemoveItem() = {
-        <button type="button" class="btn btn-link remove-exp" style="float: right; padding-top: 0px; border-top: 0px; color: #c51111;">
-            <span class="glyphicon glyphicon-remove"></span>
-        </button>
+@lastUpdatedTime() = @{
+    val date = new Date
+    date.setTime(resume.lastUpdated * 1000)
+    date.toString
 }
 
 <!DOCTYPE html>
@@ -46,63 +19,10 @@
 </head>
 <body>
     @navbar(RESUME)
-    @if(isAdmin) {
-        <li id="experience-item-cloneable" class="list-group-item" style="display: none;">
-            @buttonForRemoveItem()
-            <label>Job Title</label><input type="text" value="" class="form-control"/>
-            <br>
-            <label>Company</label><input type="text" value="" class="form-control" />
-            <br>
-        </li>
-        <li id="expertise-item-cloneable" class="list-group-item row" style="display: none;">
-            <div class="col-md-11">
-                <input type="text" value="" class="form-control" />
-            </div>
-            <div class="col-md-1">
-                <button type="button" class="btn btn-link remove-expertise" style="color: #c51111;">
-                    <span class="glyphicon glyphicon-remove"></span>
-                </button>
-            </div>
-        </li>
-        <li id="language-tech-item-cloneable" class="list-group-item row" style="display: none;">
-            <div class="col-md-10">
-                <label>Skill/Technology</label>
-                <input type="text" value="" name="skill" class="form-control" />
-            </div>
-            <div class="col-md-1">
-                <label>Skill %</label>
-                <input type="number" value="" name="progress" min="0" max="100" step="1" class="form-control"/>
-            </div>
-            <div class="col-md-1">
-                <button type="button" class="btn btn-link remove-tech-skill" style="color: #c51111;">
-                    <span class="glyphicon glyphicon-remove"></span>
-                </button>
-            </div>
-        </li>
-        <li id="education-item-cloneable" class="list-group-item row" style="display: none;">
-            <div class="col-md-5">
-                <label>Degree</label>
-                <input type="text" value="" name="degree" class="form-control" />
-            </div>
-            <div class="col-md-3">
-                <label>Year</label>
-                <input type="number" value="" name="year" min="0" max="3000" step="1" class="form-control"/>
-            </div>
-            <div class="col-md-3">
-                <label>GPA</label>
-                <input type="text" value="" name="gpa" class="form-control"/>
-            </div>
-            <div class="col-md-1">
-                <button type="button" class="btn btn-link remove-education" style="color: #c51111;">
-                    <span class="glyphicon glyphicon-remove"></span>
-                </button>
-            </div>
-        </li>
-    }
     <div class="resume">
         <header class="banner-heading text-center">
-            <h1 class="page-title">Resume</h1>
-            <small><i class="fa fa-clock-o"></i> Last Updated on: <time>@{val date = new Date; date.setTime(resume.lastUpdated * 1000); date.toString}</time></small>
+            <h1>Resume</h1>
+            <small> Last Updated on: <time>@lastUpdatedTime</time></small>
         </header>
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-offset-1 col-md-10 col-lg-offset-2 col-lg-8">
