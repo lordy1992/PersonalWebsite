@@ -18,7 +18,7 @@
                     <img id="resume-profile-img" class="img-circle img-responsive" alt="" src="@routes.Assets.versioned(resume.profileImageUrl)">
                 </figure>
                 @if(isAdmin) {
-                    @helper.form(action = routes.HomeController.upload_resume_image, 'enctype -> "multipart/form-data") {
+                    @helper.form(action = routes.ResumeController.upload_resume_image, 'enctype -> "multipart/form-data") {
                         <input type="file" name="profileImage">
                         <p><input type="submit"></p>
                     }

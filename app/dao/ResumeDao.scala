@@ -10,9 +10,9 @@ import play.api.libs.functional.syntax._
 /**
   * Created by jlord on 9/16/2016.
   */
-class ResumeDao {
+class ResumeDao(path: String) {
 
-  def getResumeFromJson(path: String) : Resume = {
+  def getResumeFromJson() : Resume = {
     val resumeStream = new FileInputStream(path)
     val resumeJson = try {
       Json.parse(resumeStream)
@@ -57,7 +57,7 @@ class ResumeDao {
     resumeJson.as[Resume]
   }
 
-  def writeResumeToJson(path: String, resume: Resume) : Unit = {
+  def writeResumeToJson(resume: Resume) : Unit = {
     implicit val educationWrites: Writes[Education] = (
       (JsPath \ "degree").write[String] and
       (JsPath \ "year").write[Int] and
@@ -118,66 +118,66 @@ class ResumeDao {
     }
   }
 
-  def updateResumeHeader(path: String, resumeHeader: ResumeHeader) : Unit = {
-    val (resume, newTimeStamp) = fetchResumeForModification(path)
+  def updateResumeHeader(resumeHeader: ResumeHeader) : Unit = {
+    val (resume, newTimeStamp) = fetchResumeForModification()
     val modifiedResume = resume.copy(lastUpdated = newTimeStamp, name = resumeHeader.name,
       jobTitle = resumeHeader.jobTitle, currentCompany = resumeHeader.currentCompany,
       phoneNo = resumeHeader.phoneNo, email = resumeHeader.email)
 
-    writeResumeToJson(path, modifiedResume)
+    writeResumeToJson(modifiedResume)
   }
 
-  def updateResumeSummary(path: String, resumeSummary: String) : Unit = {
-    val (resume, newTimeStamp) = fetchResumeForModification(path)
+  def updateResumeSummary(resumeSummary: String) : Unit = {
+    val (resume, newTimeStamp) = fetchResumeForModification()
     val modifiedResume = resume.copy(lastUpdated = newTimeStamp, summary = resumeSummary)
 
-    writeResumeToJson(path, modifiedResume)
+    writeResumeToJson(modifiedResume)
   }
 
-  def updateResearchInterests(path: String, resumeResearchInterests: String) : Unit = {
-    val (resume, newTimeStamp) = fetchResumeForModification(path)
+  def updateResearchInterests(resumeResearchInterests: String) : Unit = {
+    val (resume, newTimeStamp) = fetchResumeForModification()
     val modifiedResume = resume.copy(lastUpdated = newTimeStamp, researchInterests = resumeResearchInterests)
 
-    writeResumeToJson(path, modifiedResume)
+    writeResumeToJson(modifiedResume)
   }
 
-  def updateExperience(path: String, experiences: Seq[Experience]) : Unit = {
-    val (resume, newTimeStamp) = fetchResumeForModification(path)
+  def updateExperience(experiences: Seq[Experience]) : Unit = {
+    val (resume, newTimeStamp) = fetchResumeForModification()
     val modifiedResume = resume.copy(lastUpdated = newTimeStamp, pastExperience = experiences)
 
-    writeResumeToJson(path, modifiedResume)
+    writeResumeToJson(modifiedResume)
   }
 
-  def updateExpertise(path: String, expertise: Seq[String]) : Unit = {
-    val (resume, newTimeStamp) = fetchResumeForModification(path)
+  def updateExpertise(expertise: Seq[String]) : Unit = {
+    val (resume, newTimeStamp) = fetchResumeForModification()
     val modifiedResume = resume.copy(lastUpdated = newTimeStamp, expertise = expertise)
 
-    writeResumeToJson(path, modifiedResume)
+    writeResumeToJson(modifiedResume)
   }
 
-  def updateSkillBars(path: String, skillBars: List[SkillBar]) : Unit = {
-    val (resume, newTimeStamp) = fetchResumeForModification(path)
+  def updateSkillBars(skillBars: List[SkillBar]) : Unit = {
+    val (resume, newTimeStamp) = fetchResumeForModification()
     val modifiedResume = resume.copy(lastUpdated = newTimeStamp, skillBars = skillBars)
 
-    writeResumeToJson(path, modifiedResume)
+    writeResumeToJson(modifiedResume)
   }
 
-  def updateEducation(path: String, education: List[Education]) : Unit = {
-    val (resume, newTimeStamp) = fetchResumeForModification(path)
+  def updateEducation(education: List[Education]) : Unit = {
+    val (resume, newTimeStamp) = fetchResumeForModification()
     val modifiedResume = resume.copy(lastUpdated = newTimeStamp, education = education)
 
-    writeResumeToJson(path, modifiedResume)
+    writeResumeToJson(modifiedResume)
   }
 
-  def updateProfileImage(path: String, fileRelativePath: String) = {
-    val (resume, newTimeStamp) = fetchResumeForModification(path)
+  def updateProfileImage(fileRelativePath: String) = {
+    val (resume, newTimeStamp) = fetchResumeForModification()
     val modifiedResume = resume.copy(lastUpdated = newTimeStamp, profileImageUrl = fileRelativePath)
 
-    writeResumeToJson(path, modifiedResume)
+    writeResumeToJson(modifiedResume)
   }
 
-  private def fetchResumeForModification(path: String) : (Resume, Long) = {
-    val resume = getResumeFromJson(path)
+  private def fetchResumeForModification() : (Resume, Long) = {
+    val resume = getResumeFromJson()
     val newTimeStamp = System.currentTimeMillis() / 1000
 
     (resume, newTimeStamp)
