@@ -14,7 +14,7 @@ import scala.concurrent.{ExecutionContext, Future}
 class MetricsFilter @Inject() (implicit val mat: Materializer, ec: ExecutionContext) extends Filter {
   override def apply(filter: (RequestHeader) => Future[Result])(header: RequestHeader): Future[Result] = {
     val startTime = System.currentTimeMillis
-
+    header.id
     filter(header).map { result =>
       val endTime = System.currentTimeMillis
       val timeDiff = endTime - startTime
