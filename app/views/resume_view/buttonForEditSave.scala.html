@@ -1,0 +1,13 @@
+@(buttonId: String, addButtonId: Option[String])
+
+<div align="right" style="display: none;">
+    @if(addButtonId.isDefined) {
+        <button id="@addButtonId.get" class="btn btn-link" type="button" style="color: green;">
+            <span class="glyphicon glyphicon-plus"></span>
+        </button>
+    }
+    <button id="@(buttonId)-cancel" class="btn btn-default"
+            type="button" style="margin-bottom: 5px;">Cancel</button>
+    <button id="@buttonId" class="btn btn-primary"
+            type="submit" style="margin-bottom: 5px;">Save</button>
+</div>

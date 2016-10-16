@@ -1,0 +1,20 @@
+@(resume: objects.Resume, isAdmin: Boolean)
+
+@*
+* This template is a helper template of the primary resume template. It is for the summary section of the resume,
+* and contains both the locked and editable sections of html.
+*@
+<div id="summary-info-section" class="bs-callout bs-callout-primary">
+    @resume_view.headerWithEditOption("Summary", "summary-edit-link", isAdmin)
+    <div id="summary-readable-text" class="locked-mode">
+        @Html(resume.summary)
+    </div>
+    @if(isAdmin) {
+        <form action="/resume/update-summary" method="post">
+            <div id="summary-editable-text" class="editable-mode">
+                <textarea name="summaryContent" rows="10" cols="100">@resume.summary</textarea>
+            </div>
+            @resume_view.buttonForEditSave("summary-submit", None)
+        </form>
+    }
+</div>

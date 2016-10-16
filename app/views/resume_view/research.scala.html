@@ -1,0 +1,20 @@
+@(resume: objects.Resume, isAdmin: Boolean)
+
+@*
+* This template is a helper template of the primary resume template. It is for the research interests section of the
+* resume, and contains both the locked and editable sections of html.
+*@
+<div id="research-interests-info-section" class="bs-callout bs-callout-primary">
+    @resume_view.headerWithEditOption("Research Interests", "research-interests-edit-link", isAdmin)
+    <div id="research-interests-readable-text" class="locked-mode">
+        @Html(resume.researchInterests)
+    </div>
+    @if(isAdmin) {
+        <form action="/resume/update-research-interests" method="post">
+            <div id="research-interests-editable-text" class="editable-mode">
+                <textarea name="researchInterestContent" rows="5" cols="100">@resume.researchInterests</textarea>
+            </div>
+            @resume_view.buttonForEditSave("research-info-submit", None)
+        </form>
+    }
+</div>

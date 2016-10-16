@@ -1,0 +1,57 @@
+@(resume: objects.Resume, isAdmin: Boolean)
+
+@*
+* This template is a helper template of the primary resume template. It is for the education section, which
+* displays a list of past educational experience. This contains the editable and locked sections of the html.
+*@
+<div id="education-info-section" class="bs-callout bs-callout-primary">
+    @resume_view.headerWithEditOption("Education", "education-edit-link", isAdmin)
+    <table class="table table-striped table-responsive locked-mode">
+        <thead>
+            <tr>
+                <th>Degree</th>
+                <th>Graduating Year</th>
+                <th>GPA</th>
+            </tr>
+        </thead>
+        <tbody id="education-readable-text">
+            @for(eduEntry <- resume.education) {
+                <tr>
+                    <td>@eduEntry.degree</td>
+                    <td>@eduEntry.year</td>
+                    <td> @eduEntry.gpa</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    @if(isAdmin) {
+        <form action="/resume/update-education" method="post">
+            <div class="editable-mode">
+                <ul id="education-list">
+                    @for(eduEntry <- resume.education) {
+                        <li class="list-group-item row">
+                            <div class="col-md-5">
+                                <label>Degree</label>
+                                <input type="text" value="@eduEntry.degree" name="degree" class="form-control" />
+                            </div>
+                            <div class="col-md-3">
+                                <label>Year</label>
+                                <input type="number" value="@eduEntry.year" name="year" min="0" max="3000" step="1" class="form-control"/>
+                            </div>
+                            <div class="col-md-3">
+                                <label>GPA</label>
+                                <input type="text" value="@eduEntry.gpa" name="gpa" class="form-control"/>
+                            </div>
+                            <div class="col-md-1">
+                                <button type="button" class="btn btn-link remove-education" style="color: #c51111;">
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                </button>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
+            @resume_view.buttonForEditSave("education-submit", Some("education-add-button"))
+        </form>
+    }
+</div>

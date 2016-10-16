@@ -68,7 +68,7 @@ class HomeController @Inject()(db: Database) extends Controller with Secured {
     val resumeObj = resumeDao.getResumeFromJson("data/resume.json")
     val isAdmin = request.session.get(Security.username).isDefined
 
-    Ok(views.html.resume(resumeObj, isAdmin, false))
+    Ok(views.html.resume_view.resume(resumeObj, isAdmin, false))
   }
 
   def resume_edit = withAuth { username => implicit  request =>
@@ -76,7 +76,7 @@ class HomeController @Inject()(db: Database) extends Controller with Secured {
     val isAdmin = request.session.get(Security.username).isDefined
 
     Logger.info("In the edit logger!")
-    Ok(views.html.resume(resumeObj, true, true))
+    Ok(views.html.resume_view.resume(resumeObj, true, true))
   }
 
   def post_message = Action { implicit request =>
@@ -218,7 +218,7 @@ class HomeController @Inject()(db: Database) extends Controller with Secured {
         val dataPath = new File(play.Environment.simple().rootPath(), "/public/" + fileRelativePath)
         profileImage.ref.moveTo(dataPath)
         resumeDao.updateProfileImage("data/resume.json", fileRelativePath)
-        Ok(views.html.resume(resumeDao.getResumeFromJson("data/resume.json"), true, true))
+        Redirect(controllers.routes.HomeController.resume())
       } else {
         UnsupportedMediaType("File type not accepted")
       }

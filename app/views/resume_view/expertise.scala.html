@@ -1,0 +1,37 @@
+@(resume: objects.Resume, isAdmin: Boolean)
+
+@*
+ * This template is a helper template of the primary resume template. It is for the expertise section, which
+ * contains a list of skills. This contains the html for the locked and editable sections.
+ *@
+<div id="expertise-info-section" class="bs-callout bs-callout-primary">
+    @resume_view.headerWithEditOption("Expertise", "expertise-edit-link", isAdmin)
+    <div id="expertise-readable-text" class="locked-mode">
+        <ul class="list-group">
+            @for(point <- resume.expertise) {
+                <li class="list-group-item"> @point</li>
+            }
+        </ul>
+    </div>
+    @if(isAdmin) {
+        <form action="/resume/update-expertise-info" method="post">
+            <div class="editable-mode">
+                <ul id="expertise-list" class="list-group">
+                    @for(point <- resume.expertise) {
+                        <li class="list-group-item row">
+                            <div class="col-md-11">
+                                <input type="text" value="@point" class="form-control" />
+                            </div>
+                            <div class="col-md-1">
+                                <button type="button" class="btn btn-link remove-expertise" style="color: #c51111;">
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                </button>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
+            @resume_view.buttonForEditSave("expertise-submit", Some("expertise-add-button"))
+        </form>
+    }
+</div>

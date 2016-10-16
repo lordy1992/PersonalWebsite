@@ -143,13 +143,13 @@ function addDynamicEditor(listItem, optText) {
 
 $(document).ready(function() {
     var editLinks = [
-        {edit: '#top-level-info-edit-link', cancel: '#top-level-info-submit-cancel', form: '#top-level-info-form', successCallback: topLevelInfoCallback},
-        {edit: '#summary-edit-link', cancel: '#summary-submit-cancel', form: '#summary-info-form', successCallback: summaryCallback},
-        {edit: '#research-interests-edit-link', cancel: '#research-info-submit-cancel', form: '#research-interests-info-form', successCallback: researchInterestCallback},
-        {edit: '#past-experience-edit-link', cancel: '#past-experience-submit-cancel', form: '#past-experience-info-form', dataCallback: formPastExperienceRequest},
-        {edit: '#expertise-edit-link', cancel: '#expertise-submit-cancel', form: '#expertise-info-form', dataCallback: formExpertiseRequest, successCallback: expertiseCallback},
-        {edit: '#language-tech-edit-link', cancel: '#language-tech-submit-cancel', form: '#language-tech-info-form', dataCallback: formLanguageTechSkillRequest, successCallback: languageSkillsCallback},
-        {edit: '#education-edit-link', cancel: '#education-submit-cancel', form: '#education-info-form', dataCallback: formEducationRequest, successCallback: educationCallback}];
+        {edit: '#top-level-info-edit-link', cancel: '#top-level-info-submit-cancel', sectionId: '#top-level-info-section', successCallback: topLevelInfoCallback},
+        {edit: '#summary-edit-link', cancel: '#summary-submit-cancel', sectionId: '#summary-info-section', successCallback: summaryCallback},
+        {edit: '#research-interests-edit-link', cancel: '#research-info-submit-cancel', sectionId: '#research-interests-info-section', successCallback: researchInterestCallback},
+        {edit: '#past-experience-edit-link', cancel: '#past-experience-submit-cancel', sectionId: '#past-experience-info-section', dataCallback: formPastExperienceRequest},
+        {edit: '#expertise-edit-link', cancel: '#expertise-submit-cancel', sectionId: '#expertise-info-section', dataCallback: formExpertiseRequest, successCallback: expertiseCallback},
+        {edit: '#language-tech-edit-link', cancel: '#language-tech-submit-cancel', sectionId: '#language-tech-info-section', dataCallback: formLanguageTechSkillRequest, successCallback: languageSkillsCallback},
+        {edit: '#education-edit-link', cancel: '#education-submit-cancel', sectionId: '#education-info-section', dataCallback: formEducationRequest, successCallback: educationCallback}];
 
     var editors = [];
 
@@ -191,25 +191,25 @@ $(document).ready(function() {
     });
 
     for (let i = 0; i < editLinks.length; i++) {
-        $(editLinks[i].form).find('.editable-mode').hide();
+        $(editLinks[i].sectionId).find('.editable-mode').hide();
 
         $(editLinks[i].edit).click(function() {
             var link = editLinks[i];
-            $(link.form).find('.locked-mode').hide();
-            $(link.form).find('.editable-mode').show();
+            $(link.sectionId).find('.locked-mode').hide();
+            $(link.sectionId).find('.editable-mode').show();
             $(link.edit).hide();
-            $(link.form).find("[type='submit']").parent().show();
+            $(link.sectionId).find('form').find("[type='submit']").parent().show();
         });
 
         $(editLinks[i].cancel).click(function() {
             var link = editLinks[i];
-            $(link.form).find('.locked-mode').show();
-            $(link.form).find('.editable-mode').hide();
+            $(link.sectionId).find('.locked-mode').show();
+            $(link.sectionId).find('.editable-mode').hide();
             $(link.edit).show();
-            $(link.form).find("[type='submit']").parent().hide();
+            $(link.sectionId).find('form').find("[type='submit']").parent().hide();
         })
 
-        $(editLinks[i].form).submit(function(e) {
+        $(editLinks[i].sectionId).find('form').submit(function(e) {
             e.preventDefault();
 
             var form = $(this);
@@ -233,10 +233,10 @@ $(document).ready(function() {
                 type: 'POST',
                 success: function() {
                     var link = editLinks[i];
-                    $(link.form).find('.locked-mode').show();
-                    $(link.form).find('.editable-mode').hide();
+                    $(link.sectionId).find('.locked-mode').show();
+                    $(link.sectionId).find('.editable-mode').hide();
                     $(link.edit).show();
-                    $(link.form).find("[type='submit']").parent().hide();
+                    $(link.sectionId).find('form').find("[type='submit']").parent().hide();
 
                     if (link.successCallback !== undefined) {
                         link.successCallback.call();

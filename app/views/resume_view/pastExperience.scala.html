@@ -1,0 +1,45 @@
+@(resume: objects.Resume, isAdmin: Boolean)
+
+@buttonForRemoveItem() = {
+    <button type="button" class="btn btn-link remove-exp" style="float: right; padding-top: 0px; border-top: 0px; color: #c51111;">
+        <span class="glyphicon glyphicon-remove"></span>
+    </button>
+}
+
+@*
+ * This template is a helper template of the primary resume template. It is for the past experience section, which
+ * contains a list of past job positions and descriptions. This contains the html for the locked and editable sections.
+ *@
+<div id="past-experience-info-section" class="bs-callout bs-callout-primary">
+    @resume_view.headerWithEditOption("Past Experience", "past-experience-edit-link", isAdmin)
+    <div id="experience-readable-text" class="locked-mode">
+        <ul class="list-group">
+            @for(experience <- resume.pastExperience) {
+                <a class="list-group-item inactive-link" href="#">
+                    <h4 class="list-group-item-heading">@experience.jobTitle at @experience.company</h4>
+                    <div class="past-experience-description">
+                        @Html(experience.description)
+                    </div>
+                </a>
+            }
+        </ul>
+    </div>
+    @if(isAdmin) {
+        <form action="/resume/update-past-experience" method="post">
+            <div class="editable-mode">
+                <ul id="past-experience-list" class="list-group">
+                    @for((experience, index) <- resume.pastExperience.zipWithIndex) {
+                    <li class="list-group-item">
+                        @buttonForRemoveItem()
+                        <label>Job Title</label><input type="text" value="@experience.jobTitle" class="form-control"/>
+                        <br>
+                        <label>Company</label><input type="text" value="@experience.company" class="form-control" />
+                        <br>
+                    </li>
+                    }
+                </ul>
+            </div>
+            @resume_view.buttonForEditSave("past-experience-submit", Some("add-new-experience-button"))
+        </form>
+    }
+</div>

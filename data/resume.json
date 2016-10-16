@@ -1,5 +1,5 @@
 {
-  "lastUpdated" : 1476565491,
+  "lastUpdated" : 1476578765,
   "profileImageUrl" : "images/profile-image.png",
   "name" : "Jeremy Lord Esquire III",
   "jobTitle" : "Software Engineer II",
@@ -11,25 +11,20 @@
   "pastExperience" : [ {
     "jobTitle" : "Software Engineering Intern",
     "company" : "Amazon.com",
-    "description" : "\n                                            \n                                            Fusce ex nibh, pellentesque vitae pellentesque at, malesuada efficitur augue. Maecenas consequat ultrices sodales. Integer congue ligula in posuere auctor. Cras pretium nibh at nisi mattis, nec sodales magna suscipit. Sed pretium dui nec porta cursus.\n                                        \n                                        ",
+    "description" : "\n                        \n                                            \n                                            \n                                            Fusce ex nibh, pellentesque vitae pellentesque at, malesuada efficitur augue. Maecenas consequat ultrices sodales. Integer congue ligula in posuere auctor. Cras pretium nibh at nisi mattis, nec sodales magna suscipit. Sed pretium dui nec porta cursus.\n                                        \n                                        \n                                        \n                    ",
     "additionalPoints" : [ ]
   }, {
     "jobTitle" : "Software Engineering Intern",
     "company" : "Broadcom",
-    "description" : "\n                                            \n                                            Duis viverra, ligula a sollicitudin convallis, risus arcu tempor dui, id ultrices purus elit sed nunc. Nam vitae dapibus diam. Donec aliquam ullamcorper lobortis. Duis faucibus commodo molestie.\n                                        \n                                        ",
+    "description" : "\n                        \n                                            \n                                            \n                                            Duis viverra, ligula a sollicitudin convallis, risus arcu tempor dui, id ultrices purus elit sed nunc. Nam vitae dapibus diam. Donec aliquam ullamcorper lobortis. Duis faucibus commodo molestie.\n                                        \n                                        \n                                        \n                    ",
     "additionalPoints" : [ ]
   }, {
     "jobTitle" : "Bahamut",
     "company" : "Valhalla",
-    "description" : "\n                                            \n                                            Duis viverra, ligula a sollicitudin convallis, risus arcu tempor dui, id ultrices purus elit sed nunc. Nam vitae dapibus diam. Donec aliquam ullamcorper lobortis. Duis faucibus commodo molestie.\n                                        \n                                        ",
-    "additionalPoints" : [ ]
-  }, {
-    "jobTitle" : "Another Test",
-    "company" : "Badabushka",
-    "description" : "Hello World!",
+    "description" : "\n                        \n                                            \n                                            \n                                            Duis viverra, ligula a sollicitudin convallis, risus arcu tempor dui, id ultrices purus elit sed nunc. Nam vitae dapibus diam. Donec aliquam ullamcorper lobortis. Duis faucibus commodo molestie.\n                                        \n                                        \n                                        \n                    ",
     "additionalPoints" : [ ]
   } ],
-  "expertise" : [ "Hello World!", "Being an excellent listener", "Bear fighting", "Lorem ipsum dolor sit amet, consectetur adipiscing elit" ],
+  "expertise" : [ "Hello World!", "Being an excellent listener", "Bear fighting" ],
   "skillBars" : [ {
     "skill" : "Java/JavaEE/Spring Framework",
     "progress" : 80
@@ -57,9 +52,6 @@
   }, {
     "skill" : "Go",
     "progress" : 20
-  }, {
-    "skill" : "UI Dev",
-    "progress" : 20
   } ],
   "education" : [ {
     "degree" : "Bachelor's in Computer Engineering",
@@ -69,9 +61,5 @@
     "degree" : "Test Number 1",
     "year" : 2000,
     "gpa" : "5.00"
-  }, {
-    "degree" : "Test Number 2",
-    "year" : 1990,
-    "gpa" : "4.1"
   } ]
 }

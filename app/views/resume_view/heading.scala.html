@@ -1,0 +1,53 @@
+@(resume: objects.Resume, isAdmin: Boolean)
+
+@*
+ * This template is a helper template of the primary resume template. It is for the top section of the resume with
+ * the header information, as well as the profile picture. This contains the html for the editable and locked portion
+ * of this view.
+ *@
+<div id="top-level-info-section" class="panel-heading resume-heading">
+    <div class="row">
+        <div class="col-lg-12">
+            @if(isAdmin) {
+            <div align="right" style="padding-right: 15px;">
+                <button id="top-level-info-edit-link" type="button" class="btn btn-link">Edit</button>
+            </div>
+            }
+            <div class="col-xs-12 col-sm-3">
+                <figure>
+                    <img id="resume-profile-img" class="img-circle img-responsive" alt="" src="@routes.Assets.versioned(resume.profileImageUrl)">
+                </figure>
+                @if(isAdmin) {
+                    @helper.form(action = routes.HomeController.upload_resume_image, 'enctype -> "multipart/form-data") {
+                        <input type="file" name="profileImage">
+                        <p><input type="submit"></p>
+                    }
+                }
+            </div>
+            <div class="col-xs-12 col-sm-9">
+                @if(isAdmin) {
+                    <form action="/resume/update-heading" method="post">
+                }
+                <ul id="top-level-info-list" class="list-group">
+                    @resumeEditableText(text: String, name: String) = {
+                        @if(isAdmin) {
+                            <input type="text" name="@name" class="form-control editable-mode" value="@text" style="display: none;"/>
+                            <span class="locked-mode">@text</span>
+                        } else {
+                            @text
+                        }
+                    }
+                    <li class="list-group-item">@resumeEditableText(resume.name, "resumeName")</li>
+                    <li class="list-group-item">@resumeEditableText(resume.jobTitle, "resumeJobTitle")</li>
+                    <li class="list-group-item">@resumeEditableText(resume.currentCompany, "resumeCurrentCompany")</li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-earphone"></span> @resumeEditableText(resume.phoneNo, "resumePhoneNo")</li>
+                    <li class="list-group-item"><span class="glyphicon glyphicon-envelope"></span> @resumeEditableText(resume.email, "resumeEmail")</li>
+                </ul>
+                @if(isAdmin) {
+                    @resume_view.buttonForEditSave("top-level-info-submit", None)
+                    </form>
+                }
+            </div>
+        </div>
+    </div>
+</div>
