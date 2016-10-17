@@ -17,7 +17,7 @@ object MenuItems {
   case object HOME extends MenuItem("Home", "/")
   case object ABOUT extends MenuItem("About", "/about")
   case object CONTACT extends MenuItem("Contact", "/contact")
-  case object PROGRAMMING extends MenuItem("Programming", "/programming")
+  case object TECHNICAL extends MenuItem("Technical", "/technical")
   case object WRITING extends MenuItem("Writing", "/writing")
   case object RESUME extends MenuItem("Resume", "/resume")
   case object NONE extends MenuItem("None", "/")

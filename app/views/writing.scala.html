@@ -17,7 +17,7 @@
     </div>
 
     <div class="row">
-        <div class="col-md-2 col-md-offset-2">
+        <div class="col-md-2 col-md-offset-1">
             <div class="list-group" id="article-list-id">
                 <div class="list-group-item disabled" style="cursor: default;">List of Articles</div>
 
@@ -30,7 +30,7 @@
                 }
             </div>
         </div>
-        <div class="col-md-5">
+        <div class="col-md-6">
             <div id="article-panel" class="panel panel-default">
                 @for((article, ind) <- articles.zipWithIndex) {
                     @if(ind == 0) {

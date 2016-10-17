@@ -52,8 +52,8 @@ class HomeController @Inject()(db: Database) extends Controller with Secured {
     Ok(views.html.contact())
   }
 
-  def programming = Action {
-    Ok(views.html.programming())
+  def technical = Action {
+    Ok(views.html.technical())
   }
 
   def writing = Action {
