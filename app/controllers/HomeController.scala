@@ -2,7 +2,7 @@ package controllers
 
 import javax.inject._
 
-import dao.{ArticleDao, MessageDao}
+import dao.{ArticleDao, MessageDao, PostDao}
 import objects._
 import play.api.data.Forms._
 import play.api.data._
@@ -20,6 +20,7 @@ class HomeController @Inject()(db: Database) extends Controller with Secured {
 
   val articleDao = new ArticleDao(db)
   val messageDao = new MessageDao(db)
+  val postDao = new PostDao(db)
 
   val articleForm = Form(
     mapping(
@@ -52,8 +53,16 @@ class HomeController @Inject()(db: Database) extends Controller with Secured {
     Ok(views.html.contact())
   }
 
-  def technical = Action {
-    Ok(views.html.technical())
+  def technical_post(id: Int) = technical(Some(id))
+
+  def technical(id: Option[Int]) = Action {
+    val titles = postDao.getPostTitles()
+    if (titles.isEmpty) {
+      Ok(views.html.technical(None, titles))
+    } else {
+      val selectedPost = postDao.getPostContent(id.getOrElse(titles(0)._1))
+      Ok(views.html.technical(Some(selectedPost), titles))
+    }
   }
 
   def writing = Action {

@@ -1,5 +1,6 @@
 package dao
 
+import enums.PostStatus
 import objects.{InternalPost, Post}
 import org.joda.time.DateTime
 import play.api.db.Database
@@ -12,18 +13,22 @@ import scala.collection.mutable.ListBuffer
 class PostDao(db: Database) {
 
   def addPost(post: Post): Unit = {
-    val sqlAddPost = "INSERT INTO Posts (title, content, post_time) VALUES(?, ?, ?)"
+    val sqlAddPost = "INSERT INTO Posts (title, content, post_time, status) VALUES(?, ?, ?, ?)"
     db.withConnection { conn =>
       val addPostStatement = conn.prepareStatement(sqlAddPost)
       addPostStatement.setString(1, post.title)
       addPostStatement.setString(2, post.content)
       addPostStatement.setLong(3, DateTime.now.getMillis / 1000)
+      addPostStatement.setString(4, post.status.getName)
       addPostStatement.executeUpdate()
     }
   }
 
-  def getPostTitles(): List[(Int, String, DateTime)] = {
-    val sqlListPosts = "SELECT id, title, post_time FROM Posts ORDER BY post_time DESC"
+  def getPostTitles(includeAllStatuses: Boolean = false): List[(Int, String, DateTime)] = {
+    val sqlListPosts = "SELECT id, title, post_time FROM Posts " +
+      (if (!includeAllStatuses) "WHERE status = 'PUBLISHED' " else "") +
+      "ORDER BY post_time DESC"
+
     val messagesBuffer = new ListBuffer[(Int, String, DateTime)]()
     db.withConnection { conn =>
       val listPostStatement = conn.createStatement()
@@ -40,8 +45,8 @@ class PostDao(db: Database) {
     messagesBuffer.toList
   }
 
-  def getPostContent(postId: Int): InternalPost = {
-    val sqlGetPost = "SELECT * FROM Posts WHERE id = ?"
+  def getPostContent(postId: Int, includeAllStatuses: Boolean = false): InternalPost = {
+    val sqlGetPost = "SELECT * FROM Posts WHERE id = ?" + (if (!includeAllStatuses) " AND status = 'PUBLISHED'" else "")
     db.withConnection { conn =>
       val getPostStatement = conn.prepareStatement(sqlGetPost)
       getPostStatement.setInt(1, postId)
@@ -50,8 +55,9 @@ class PostDao(db: Database) {
       val title = resultSet.getString("title")
       val content = resultSet.getString("content")
       val postTime = resultSet.getInt("post_time")
+      val postStatus = resultSet.getString("status")
 
-      InternalPost(postId, new DateTime(postTime * 1000), Post(title, content))
+      InternalPost(postId, new DateTime(postTime * 1000), Post(title, content, PostStatus.getStatusFromName(postStatus).get))
     }
   }
 

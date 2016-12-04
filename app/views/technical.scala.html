@@ -1,4 +1,4 @@
-@()(implicit title: String)
+@(selectedPost: Option[objects.InternalPost], posts: List[(Int, String, org.joda.time.DateTime)])(implicit title: String)
 
 @import enums.MenuItems._
 
@@ -10,8 +10,50 @@
 <body>
     @navbar(TECHNICAL)
 
+    <div class="banner-heading text-center">
+        <header>
+            <h1>Technical Articles</h1>
+        </header>
+    </div>
     <div class="container">
-        <h1>Technical Posts</h1>
+        <div class="col-lg-8">
+            @if(!selectedPost.isEmpty) {
+                <h1>@selectedPost.get.post.title</h1>
+                <p>
+                    <span class="glyphicon glyphicon-time"></span>
+                    <small> Posted on: <time>@selectedPost.get.postTime.toString</time></small>
+                </p>
+                <hr>
+                <div class="post-content">
+                    @Html(selectedPost.get.post.content)
+                </div>
+            }
+        </div>
+        <div class="col-md-4">
+            <div class="well">
+                <h4>Search</h4>
+                <div class="input-group">
+                    <input type="text" class="form-control">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                    </span>
+                </div>
+            </div>
+            <div class="well">
+                <h4>Posts</h4>
+                <div class="list-group">
+                    @for(post <- posts) {
+                        @if(selectedPost.nonEmpty && post._1 == selectedPost.get.id) {
+                            <a href="#" class="list-group-item active" id="@post._1">@post._2</a>
+                        } else {
+                            <a href="@routes.HomeController.technical_post(post._1)" class="list-group-item" id="@post._1">@post._2</a>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
     </div>
 
     @footer()
