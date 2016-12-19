@@ -1,6 +1,4 @@
-========================================================================================================================
-==== Personal Site w/ the Play Framework
-========================================================================================================================
+Personal Site w/ the Play Framework
+===========================================================================================================
 
-This is a project I began working on to learn Scala and the Play Framework. It is a dynamic personal website with
-a blog section, articles section (for fiction rather than technical articles), and an editable resume.
+This is a project I began working on to learn Scala and the Play Framework. It is a dynamic personal website with a blog section, articles section (for fiction rather than technical articles), and an editable resume.
