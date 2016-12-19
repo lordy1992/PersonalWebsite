@@ -24,6 +24,7 @@ class AuthController @Inject()(val messagesApi: MessagesApi) extends Controller 
     })
   )
 
+  //TODO: Actually implement authorization.
   def check(username: String, password: String) = {
     (username == "admin" && password == "1234")
   }
