@@ -1,4 +1,4 @@
-@(selectedPost: Option[objects.InternalPost], posts: List[(Int, String, org.joda.time.DateTime, enums.PostStatus.PostStatus)])(implicit title: String)
+@(selectedPost: Option[objects.InternalPost], posts: List[(Int, String, org.joda.time.DateTime, enums.PostStatus.PostStatus)], isAdmin: Boolean)(implicit title: String)
 
 @import enums.MenuItems._
 
@@ -23,6 +23,17 @@
                     <span class="glyphicon glyphicon-time"></span>
                     <small> Posted on: <time>@selectedPost.get.postTime.toString</time></small>
                 </p>
+                @if(isAdmin) {
+                    <form name="publish-delete-form" action="/publish-delete-article" method="POST">
+                        <input type="hidden" name="id" value="@selectedPost.get.id">
+                        <div class="btn-group" role="group">
+                            @if(selectedPost.get.post.status == enums.PostStatus.EDIT) {
+                                <button type="submit" class="btn btn-success" name="action-button" value="publish">Publish</button>
+                            }
+                            <button type="submit" class="btn btn-danger" name="action-button" value="delete">Delete</button>
+                        </div>
+                    </form>
+                }
                 <hr>
                 <div class="post-content">
                     @Html(selectedPost.get.post.content)
@@ -34,20 +45,22 @@
                 <h4>Posts</h4>
                 <div class="list-group">
                     @for(post <- posts) {
-                        @if(selectedPost.nonEmpty && post._1 == selectedPost.get.id) {
-                            <a href="#" class="list-group-item active" id="@post._1">
-                                @post._2
-                                @if(post._4 == enums.PostStatus.EDIT) {
-                                    <span class="glyphicon glyphicon-pencil"></span>
-                                }
-                            </a>
-                        } else {
-                            <a href="@routes.HomeController.technical_post(post._1)" class="list-group-item" id="@post._1">
-                                @post._2
-                                @if(post._4 == enums.PostStatus.EDIT) {
-                                    <span class="glyphicon glyphicon-pencil"></span>
-                                }
-                            </a>
+                        @if(post._4 != enums.PostStatus.DELETED) {
+                            @if(selectedPost.nonEmpty && post._1 == selectedPost.get.id) {
+                                <a href="#" class="list-group-item active" id="@post._1">
+                                    @post._2
+                                    @if(post._4 == enums.PostStatus.EDIT) {
+                                        <span class="glyphicon glyphicon-pencil"></span>
+                                    }
+                                </a>
+                            } else {
+                                <a href="@routes.HomeController.technical_post(post._1)" class="list-group-item" id="@post._1">
+                                    @post._2
+                                    @if(post._4 == enums.PostStatus.EDIT) {
+                                        <span class="glyphicon glyphicon-pencil"></span>
+                                    }
+                                </a>
+                            }
                         }
                     }
                 </div>

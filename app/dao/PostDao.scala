@@ -25,9 +25,10 @@ class PostDao(db: Database) {
     }
   }
 
-  def getPostTitles(includeAllStatuses: Boolean = false): List[(Int, String, DateTime, PostStatus)] = {
+  def getPostTitles(includeAllNonDeletedStatuses: Boolean = false): List[(Int, String, DateTime, PostStatus)] = {
     val sqlListPosts = "SELECT id, title, post_time, status FROM Posts " +
-      (if (!includeAllStatuses) "WHERE status = 'PUBLISHED' " else "") +
+      (if (!includeAllNonDeletedStatuses) "WHERE status = 'PUBLISHED' "
+        else "WHERE status = 'PUBLISHED' OR status = 'EDIT' ") +
       "ORDER BY post_time DESC"
 
     val messagesBuffer = new ListBuffer[(Int, String, DateTime, PostStatus)]()
@@ -78,6 +79,30 @@ class PostDao(db: Database) {
       val removeStatement = conn.prepareStatement(sqlRemoveMessage)
       removeStatement.setInt(1, postId)
       removeStatement.executeUpdate()
+    }
+  }
+
+  def publishPost(postId: Int): Unit = {
+    val sqlPublishPost = "UPDATE Posts SET post_time = ?, status = ? WHERE id = ?"
+    db.withConnection { conn =>
+      val publishStatement = conn.prepareStatement(sqlPublishPost)
+      publishStatement.setLong(1, DateTime.now.getMillis)
+      publishStatement.setString(2, PostStatus.PUBLISHED.getName)
+      publishStatement.setInt(3, postId)
+
+      publishStatement.executeUpdate()
+    }
+  }
+
+  def softDeletePost(postId: Int): Unit = {
+    val sqlDeletePost = "UPDATE Posts SET post_time = ?, status = ? WHERE id = ?"
+    db.withConnection { conn =>
+      val publishStatement = conn.prepareStatement(sqlDeletePost)
+      publishStatement.setLong(1, DateTime.now.getMillis)
+      publishStatement.setString(2, PostStatus.DELETED.getName)
+      publishStatement.setInt(3, postId)
+
+      publishStatement.executeUpdate()
     }
   }
 }

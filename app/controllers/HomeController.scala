@@ -61,14 +61,14 @@ class HomeController @Inject()(db: Database) extends Controller with Secured {
     val isAdmin = request.session.get(Security.username).isDefined
     val titles = postDao.getPostTitles(isAdmin)
     if (titles.isEmpty) {
-      Ok(views.html.technical(None, titles))
+      Ok(views.html.technical(None, titles, isAdmin))
     } else {
       val selectedPost = postDao.getPostContent(id.getOrElse(titles(0)._1), isAdmin)
       if (selectedPost.post.status != PostStatus.PUBLISHED && !isAdmin) {
         // Regular users should not be able to access unpublished posts
-        Ok(views.html.technical(None, titles))
+        Ok(views.html.technical(None, titles, isAdmin))
       } else {
-        Ok(views.html.technical(Some(selectedPost), titles))
+        Ok(views.html.technical(Some(selectedPost), titles, isAdmin))
       }
     }
   }
@@ -98,6 +98,21 @@ class HomeController @Inject()(db: Database) extends Controller with Secured {
       postDao.addPost(post)
       Redirect(controllers.routes.HomeController.technical())
     }
+  }
+
+  def publish_delete_article = withAuth { username => implicit request =>
+    val publishForm = Form(tuple("id" -> number, "action-button" -> text))
+    val formData = publishForm.bindFromRequest.get
+    val actionType = formData._2
+    val postId = formData._1
+
+    if (actionType == "publish") {
+      postDao.publishPost(postId)
+    } else if (actionType == "delete") {
+      postDao.softDeletePost(postId)
+    }
+
+    Redirect(controllers.routes.HomeController.technical())
   }
 
   def delete_message = withAuth { username => implicit request =>
