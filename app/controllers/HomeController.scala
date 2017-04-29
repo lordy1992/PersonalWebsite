@@ -57,13 +57,19 @@ class HomeController @Inject()(db: Database) extends Controller with Secured {
 
   def technical_post(id: Int) = technical(Some(id))
 
-  def technical(id: Option[Int]) = Action {
-    val titles = postDao.getPostTitles()
+  def technical(id: Option[Int]) = Action { request =>
+    val isAdmin = request.session.get(Security.username).isDefined
+    val titles = postDao.getPostTitles(isAdmin)
     if (titles.isEmpty) {
       Ok(views.html.technical(None, titles))
     } else {
-      val selectedPost = postDao.getPostContent(id.getOrElse(titles(0)._1))
-      Ok(views.html.technical(Some(selectedPost), titles))
+      val selectedPost = postDao.getPostContent(id.getOrElse(titles(0)._1), isAdmin)
+      if (selectedPost.post.status != PostStatus.PUBLISHED && !isAdmin) {
+        // Regular users should not be able to access unpublished posts
+        Ok(views.html.technical(None, titles))
+      } else {
+        Ok(views.html.technical(Some(selectedPost), titles))
+      }
     }
   }
 

@@ -1,4 +1,4 @@
-@(selectedPost: Option[objects.InternalPost], posts: List[(Int, String, org.joda.time.DateTime)])(implicit title: String)
+@(selectedPost: Option[objects.InternalPost], posts: List[(Int, String, org.joda.time.DateTime, enums.PostStatus.PostStatus)])(implicit title: String)
 
 @import enums.MenuItems._
 
@@ -35,9 +35,19 @@
                 <div class="list-group">
                     @for(post <- posts) {
                         @if(selectedPost.nonEmpty && post._1 == selectedPost.get.id) {
-                            <a href="#" class="list-group-item active" id="@post._1">@post._2</a>
+                            <a href="#" class="list-group-item active" id="@post._1">
+                                @post._2
+                                @if(post._4 == enums.PostStatus.EDIT) {
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                }
+                            </a>
                         } else {
-                            <a href="@routes.HomeController.technical_post(post._1)" class="list-group-item" id="@post._1">@post._2</a>
+                            <a href="@routes.HomeController.technical_post(post._1)" class="list-group-item" id="@post._1">
+                                @post._2
+                                @if(post._4 == enums.PostStatus.EDIT) {
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                }
+                            </a>
                         }
                     }
                 </div>
