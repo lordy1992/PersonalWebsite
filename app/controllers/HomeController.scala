@@ -3,6 +3,7 @@ package controllers
 import javax.inject._
 
 import dao.{ArticleDao, MessageDao, PostDao}
+import enums.PostStatus
 import objects._
 import play.api.data.Forms._
 import play.api.data._
@@ -24,9 +25,10 @@ class HomeController @Inject()(db: Database) extends Controller with Secured {
 
   val articleForm = Form(
     mapping(
+      "post-type" -> text,
       "article-name" -> text,
       "article" -> text
-    )(Article.apply)(Article.unapply)
+    )(GenericPost.apply)(GenericPost.unapply)
   )
 
   val messageForm = Form(
@@ -81,8 +83,15 @@ class HomeController @Inject()(db: Database) extends Controller with Secured {
 
   def post_article = withAuth { username => implicit request =>
     val articleData = articleForm.bindFromRequest.get
-    articleDao.addArticle(articleData)
-    Redirect(controllers.routes.HomeController.writing())
+    if (articleData.postType == "writing") {
+      val writingArticle = Article(articleData.name, articleData.content)
+      articleDao.addArticle(writingArticle)
+      Redirect(controllers.routes.HomeController.writing())
+    } else {
+      val post = Post(articleData.name, articleData.content, PostStatus.EDIT)
+      postDao.addPost(post)
+      Redirect(controllers.routes.HomeController.technical())
+    }
   }
 
   def delete_message = withAuth { username => implicit request =>
