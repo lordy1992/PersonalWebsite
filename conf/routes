@@ -14,6 +14,7 @@ GET     /authenticate                       controllers.AuthController.authentic
 GET     /logout                             controllers.AuthController.logout
 GET     /admin                              controllers.HomeController.admin
 POST    /post-article                       controllers.HomeController.post_article
+POST    /delete-writing                     controllers.HomeController.delete_writing
 POST    /publish-delete-article             controllers.HomeController.publish_delete_article
 POST    /post-message                       controllers.HomeController.post_message
 POST    /delete-message                     controllers.HomeController.delete_message

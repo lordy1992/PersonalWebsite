@@ -42,4 +42,13 @@ class ArticleDao(db: Database) {
 
     resultBuffer.toList
   }
+
+  def removeArticle(id: Int): Unit = {
+    val removeArticleSql = "DELETE FROM Articles WHERE id = ?"
+    db.withConnection { conn =>
+      val removeStatement = conn.prepareStatement(removeArticleSql)
+      removeStatement.setInt(1, id)
+      removeStatement.executeUpdate()
+    }
+  }
 }

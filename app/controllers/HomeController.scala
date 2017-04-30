@@ -73,8 +73,9 @@ class HomeController @Inject()(db: Database) extends Controller with Secured {
     }
   }
 
-  def writing = Action {
-    Ok(views.html.writing(articleDao.listAllArticles()))
+  def writing = Action { request =>
+    val isAdmin = request.session.get(Security.username).isDefined
+    Ok(views.html.writing(articleDao.listAllArticles(), isAdmin))
   }
 
   def post_message = Action { implicit request =>
@@ -119,5 +120,12 @@ class HomeController @Inject()(db: Database) extends Controller with Secured {
     val messageId = deleteForm.bindFromRequest.get
     messageDao.removeMessage(messageId)
     Redirect(controllers.routes.HomeController.admin())
+  }
+
+  def delete_writing = withAuth { username => implicit request =>
+    val deleteForm = Form(single("id" -> number))
+    val writingId = deleteForm.bindFromRequest.get
+    articleDao.removeArticle(writingId)
+    Redirect(controllers.routes.HomeController.writing())
   }
 }

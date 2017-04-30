@@ -1,4 +1,4 @@
-@(articles: List[objects.InternalArticle])(implicit title: String)
+@(articles: List[objects.InternalArticle], isAdmin: Boolean)(implicit title: String)
 
 @import enums.MenuItems._
 
@@ -37,6 +37,13 @@
                         <div class="article-container">
                     } else {
                         <div class="article-container" style="display: none;">
+                    }
+
+                    @if(isAdmin) {
+                        <form name="delete-writing-form" action="/delete-writing" method="POST">
+                            <input type="hidden" name="id" value="@article.id">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
                     }
                         <h3 class="text-center">@article.article.name</h3>
                         <div class="panel-body">
