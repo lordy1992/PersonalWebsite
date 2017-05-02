@@ -12,10 +12,10 @@ import play.api.libs.functional.syntax._
   * Created by jlord on 10/16/2016.
   */
 @Singleton
-class ResumeController @Inject() extends Controller with Secured {
+class ResumeController @Inject() (configuration: play.api.Configuration) extends Controller with Secured {
 
   implicit val title = "Jeremy Lord"
-  val resumeDao = new ResumeDao("data/resume.json")
+  val resumeDao = new ResumeDao(configuration.underlying.getString("resume.path"))
 
   def resume = Action { request =>
     val resumeObj = resumeDao.getResumeFromJson()

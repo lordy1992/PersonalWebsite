@@ -1,5 +1,6 @@
 logs
 target
+conf/production.conf
 /.idea
 /.idea_modules
 /.classpath
@@ -17,5 +18,6 @@ target
 *.iml
 *.sbtserver
 /data/backups/*.json
+/data/admin/admin
 /tmp/*.json
 /public/images/profile-image.*

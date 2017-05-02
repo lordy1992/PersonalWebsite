@@ -2,3 +2,17 @@ Personal Site w/ the Play Framework
 ===========================================================================================================
 
 This is a project I began working on to learn Scala and the Play Framework. It is a dynamic personal website with a blog section, articles section (for fiction rather than technical articles), and an editable resume.
+
+Generating an Admin Password
+------------------------------
+
+I assume python and pip is installed. We can use the python bcrypt library and the -c flag with python to hash on the console.
+
+Here are the steps that can be taken to generate the password and store it in an appropriate file in the server (in a location that
+can only be accessed by root). Note that we pass the prefix argument to gensalt to ensure the prefix is 2a, so that it is compatible with the
+bcrypt library used in Play.
+
+Note that the script generateHash.py referred to here is in the scripts directory of this project.
+
+pip install bcrypt
+python generateHash.py > /etc/lordweb/admin

@@ -7,13 +7,10 @@ import play.api.Logger
 import play.api.libs.json.{JsPath, Json, Reads, Writes}
 import play.api.libs.functional.syntax._
 
-/**
-  * Created by jlord on 9/16/2016.
-  */
 class ResumeDao(path: String) {
 
   def getResumeFromJson() : Resume = {
-    val resumeStream = new FileInputStream(path)
+    val resumeStream = new FileInputStream(path + "resume.json")
     val resumeJson = try {
       Json.parse(resumeStream)
     } finally {
@@ -94,7 +91,7 @@ class ResumeDao(path: String) {
 
     val resumeAsJson = Json.prettyPrint(Json.toJson(resume))
     val currentTimestamp = System.currentTimeMillis()
-    val tmpFile = new File(s"tmp/$currentTimestamp.json")
+    val tmpFile = new File(path + s"tmp/$currentTimestamp.json")
     val fileWriter = new PrintWriter(tmpFile)
 
     try {
@@ -105,12 +102,12 @@ class ResumeDao(path: String) {
 
     // Rename the original resume (keep backups)
     val originalFile = new File(path)
-    val backupFile = new File(s"data/backups/resume-$currentTimestamp.json")
+    val backupFile = new File(path + s"backups/resume-$currentTimestamp.json")
     if (originalFile.renameTo(backupFile)) {
       // Renaming succeeded
       if (!tmpFile.renameTo(originalFile)) {
         // We were not able to rename the temp file to the resume slot, log error
-        Logger.error("Could not move the temporary file to /data/resume.json")
+        Logger.error("Could not move the temporary file to " + path + "resume.json")
       }
     } else {
       // Could not rename to a backup file

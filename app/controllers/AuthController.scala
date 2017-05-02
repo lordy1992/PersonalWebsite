@@ -1,17 +1,20 @@
 package controllers
 
+import java.io.{BufferedReader, FileReader}
 import javax.inject.{Inject, Singleton}
 
-import play.api.data._
+import org.mindrot.jbcrypt.BCrypt
 import play.api.data.Forms._
-import play.api.mvc._
+import play.api.data._
 import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.mvc._
 
 /**
   * Created by jlord on 5/8/2016.
   */
 @Singleton
-class AuthController @Inject()(val messagesApi: MessagesApi) extends Controller with I18nSupport {
+class AuthController @Inject()(val messagesApi: MessagesApi, configuration: play.api.Configuration)
+    extends Controller with I18nSupport {
 
   implicit val title = "Jeremy Lord"
 
@@ -24,9 +27,15 @@ class AuthController @Inject()(val messagesApi: MessagesApi) extends Controller 
     })
   )
 
-  //TODO: Actually implement authorization.
   def check(username: String, password: String) = {
-    (username == "admin" && password == "1234")
+
+    val adminHashBr = new BufferedReader(new FileReader(configuration.underlying.getString("admin.path")))
+    val hashInput = adminHashBr.readLine()
+    adminHashBr.close()
+
+    val usernameHashCombo = hashInput.split(":", 2)
+
+    (username == usernameHashCombo(0) && BCrypt.checkpw(password, usernameHashCombo(1)))
   }
 
   def login = Action {
