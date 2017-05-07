@@ -10,9 +10,9 @@ GET     /technical/:id                      controllers.HomeController.technical
 GET     /writing                            controllers.HomeController.writing
 GET     /resume                             controllers.ResumeController.resume
 GET     /login                              controllers.AuthController.login
-GET     /authenticate                       controllers.AuthController.authenticate
 GET     /logout                             controllers.AuthController.logout
 GET     /admin                              controllers.HomeController.admin
+POST     /authenticate                       controllers.AuthController.authenticate
 POST    /post-article                       controllers.HomeController.post_article
 POST    /delete-writing                     controllers.HomeController.delete_writing
 POST    /publish-delete-article             controllers.HomeController.publish_delete_article
