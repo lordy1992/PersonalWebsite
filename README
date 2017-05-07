@@ -16,3 +16,21 @@ Note that the script generateHash.py referred to here is in the scripts director
 
 pip install bcrypt
 python generateHash.py > /etc/lordweb/admin
+
+The admin password should only be entered on the authenticate page when using HTTPS.
+
+Running with HTTPS
+-----------------------------
+
+You will have to generate a CRT file and then add it to a key store (using the keytool). Once that is done, you can run the play app with a
+variation on the following command (changing it to your paths, keystore name, etc.. for your own website):
+
+ ./play-scala -Dplay.crypto.secret="$(cat /opt/yoursite/admin/crypto_secret)" \
+ -Dconfig.resource=production.conf \
+ -Dhttps.port=443 \
+ -Dplay.server.https.keyStore.path="/opt/yoursite/admin/yoursite.com.jks" \
+ -Dplay.server.https.keyStore.type="JKS" \
+ -Dplay.server.https.keyStore.password="$(read -s -p 'Password: ' PASS; echo $PASS)"
+
+In that command, the expectation is that your Crypto secret that Play uses is in the crypto_secret file, and that the
+key store is password protected (this command will prompt for the password).
