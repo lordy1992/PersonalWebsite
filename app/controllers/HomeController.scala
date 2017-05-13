@@ -5,7 +5,6 @@ import javax.inject._
 import dao.{ArticleDao, MessageDao, PostDao}
 import enums.PostStatus
 import objects._
-import play.api.Logger
 import play.api.cache.Cached
 import play.api.data.Forms._
 import play.api.data._
@@ -22,9 +21,9 @@ class HomeController @Inject()(db: Database, cached: Cached) extends Controller 
   implicit val title = "Jeremy Lord"
 
   // Constants
-  val ActionCacheDuration = 43200 // Cache for 12 hours -- the content on this page will be updated infrequently, and
+  //val ActionCacheDuration = 43200 // Cache for 12 hours -- the content on this page will be updated infrequently, and
                                   // it is unnecessary for content changes to be visible within a day of the change.
-
+  val ActionCacheDuration = 10
   val articleDao = new ArticleDao(db)
   val messageDao = new MessageDao(db)
   val postDao = new PostDao(db)
