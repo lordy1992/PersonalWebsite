@@ -5,6 +5,8 @@ import javax.inject._
 import dao.{ArticleDao, MessageDao, PostDao}
 import enums.PostStatus
 import objects._
+import play.api.Logger
+import play.api.cache.Cached
 import play.api.data.Forms._
 import play.api.data._
 import play.api.db.Database
@@ -15,9 +17,13 @@ import play.api.mvc._
  * application's home page.
  */
 @Singleton
-class HomeController @Inject()(db: Database) extends Controller with Secured {
+class HomeController @Inject()(db: Database, cached: Cached) extends Controller with Secured {
 
   implicit val title = "Jeremy Lord"
+
+  // Constants
+  val ActionCacheDuration = 43200 // Cache for 12 hours -- the content on this page will be updated infrequently, and
+                                  // it is unnecessary for content changes to be visible within a day of the change.
 
   val articleDao = new ArticleDao(db)
   val messageDao = new MessageDao(db)
@@ -43,39 +49,50 @@ class HomeController @Inject()(db: Database) extends Controller with Secured {
     "messageid" -> number
   )
 
-  def index = Action {
-    Ok(views.html.main())
+  def index = cached(_ => "index", duration = ActionCacheDuration) {
+    Action {
+      Ok(views.html.main())
+    }
   }
 
-  def about = Action {
-    Ok(views.html.about())
+  def about = cached(_ => "about", duration = ActionCacheDuration) {
+    Action {
+      Ok(views.html.about())
+    }
   }
-
-  def contact = Action {
-    Ok(views.html.contact())
+  def contact = cached(_ => "contact", duration = ActionCacheDuration) {
+    Action {
+      Ok(views.html.contact())
+    }
   }
 
   def technical_post(id: Int) = technical(Some(id))
 
-  def technical(id: Option[Int]) = Action { request =>
-    val isAdmin = request.session.get(Security.username).isDefined
-    val titles = postDao.getPostTitles(isAdmin)
-    if (titles.isEmpty) {
-      Ok(views.html.technical(None, titles, isAdmin))
-    } else {
-      val selectedPost = postDao.getPostContent(id.getOrElse(titles(0)._1), isAdmin)
-      if (selectedPost.post.status != PostStatus.PUBLISHED && !isAdmin) {
-        // Regular users should not be able to access unpublished posts
+  def technical(id: Option[Int]) = cached(request => "technical." + id.getOrElse(-1)
+      + "." + request.session.get(Security.username).isDefined, duration = ActionCacheDuration) {
+    Action { request =>
+      val isAdmin = request.session.get(Security.username).isDefined
+      val titles = postDao.getPostTitles(isAdmin)
+      if (titles.isEmpty) {
         Ok(views.html.technical(None, titles, isAdmin))
       } else {
-        Ok(views.html.technical(Some(selectedPost), titles, isAdmin))
+        val selectedPost = postDao.getPostContent(id.getOrElse(titles(0)._1), isAdmin)
+        if (selectedPost.post.status != PostStatus.PUBLISHED && !isAdmin) {
+          // Regular users should not be able to access unpublished posts
+          Ok(views.html.technical(None, titles, isAdmin))
+        } else {
+          Ok(views.html.technical(Some(selectedPost), titles, isAdmin))
+        }
       }
     }
   }
 
-  def writing = Action { request =>
-    val isAdmin = request.session.get(Security.username).isDefined
-    Ok(views.html.writing(articleDao.listAllArticles(), isAdmin))
+  def writing = cached(request => "writing." + request.session.get(Security.username).isDefined,
+      duration = ActionCacheDuration) {
+    Action { request =>
+      val isAdmin = request.session.get(Security.username).isDefined
+      Ok(views.html.writing(articleDao.listAllArticles(), isAdmin))
+    }
   }
 
   def post_message = Action { implicit request =>
