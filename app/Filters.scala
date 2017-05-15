@@ -1,6 +1,6 @@
 import javax.inject._
 
-import filters.MetricsFilter
+import filters.{MetricsFilter, TLSFilter}
 import play.api.http.DefaultHttpFilters
 
 /**
@@ -16,5 +16,5 @@ import play.api.http.DefaultHttpFilters
  * each response.
  */
 @Singleton
-class Filters @Inject() (
-  metricsFilter: MetricsFilter) extends DefaultHttpFilters(metricsFilter)
+class Filters @Inject() (tlsFilter: TLSFilter, metricsFilter: MetricsFilter)
+  extends DefaultHttpFilters(tlsFilter, metricsFilter)
