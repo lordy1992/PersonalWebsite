@@ -59,9 +59,10 @@ class HomeController @Inject()(db: Database, cached: Cached) extends Controller 
       Ok(views.html.about())
     }
   }
-  def contact = cached(_ => "contact", duration = ActionCacheDuration) {
+
+  def contact(sent: Boolean) = cached(_ => "contact", duration = ActionCacheDuration) {
     Action {
-      Ok(views.html.contact())
+      Ok(views.html.contact(justSubmitted = sent))
     }
   }
 
@@ -97,7 +98,8 @@ class HomeController @Inject()(db: Database, cached: Cached) extends Controller 
   def post_message = Action { implicit request =>
     val messageData = messageForm.bindFromRequest.get
     messageDao.addMessage(messageData)
-    Ok(views.html.contact())
+    Redirect(controllers.routes.HomeController.contact(true))
+   // Ok(views.html.contact(justSubmitted = true))
   }
 
   def admin = withAuth { username => implicit request =>

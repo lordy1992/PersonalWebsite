@@ -4,7 +4,7 @@
 
 GET     /                                   controllers.HomeController.index
 GET     /about                              controllers.HomeController.about
-GET     /contact                            controllers.HomeController.contact
+GET     /contact                            controllers.HomeController.contact(sent: Boolean ?= false)
 GET     /technical                          controllers.HomeController.technical(id: Option[Int] = None)
 GET     /technical/:id                      controllers.HomeController.technical_post(id: Int)
 GET     /writing                            controllers.HomeController.writing
