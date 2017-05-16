@@ -9,7 +9,7 @@ case class Resume(val lastUpdated: Long,
                   val currentCompany: String,
                   val phoneNo: String,
                   val email: String,
-                  val summary: String,
+                  val skillSummary: TechSkillSummary,
                   val researchInterests: String,
                   val pastExperience: Seq[Experience],
                   val expertise: Seq[String],
@@ -27,3 +27,7 @@ case class SkillBar(val skill: String,
 case class Education(val degree: String,
                      val year: Int,
                      val gpa: String) extends ResumeModel
+
+case class TechSkillSummary(val computerSkills: Seq[String],
+                            val toolSkills: Seq[String],
+                            val conceptualSkills: Seq[String]) extends ResumeModel

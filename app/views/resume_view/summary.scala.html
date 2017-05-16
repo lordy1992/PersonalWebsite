@@ -5,14 +5,105 @@
 * and contains both the locked and editable sections of html.
 *@
 <div id="summary-info-section" class="bs-callout bs-callout-primary">
-    @resume_view.headerWithEditOption("Summary", "summary-edit-link", isAdmin)
+    @resume_view.headerWithEditOption("Technical Skills Summary", "summary-edit-link", isAdmin)
     <div id="summary-readable-text" class="locked-mode">
-        @Html(resume.summary)
+        <table class="table table-bordered">
+            <thead>
+                <th>Computer Skills</th>
+                <th>Languages/SDKs/Tools</th>
+                <th>Conceptual Skills</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <ul id="computer-skills-readable">
+                            @for(computerSkill <- resume.skillSummary.computerSkills) {
+                                <li>@computerSkill</li>
+                            }
+                        </ul>
+                    </td>
+                    <td class="col-md-4">
+                        <ul id="tool-skills-readable">
+                            @for(toolSkill <- resume.skillSummary.toolSkills) {
+                            <li>@toolSkill</li>
+                            }
+                        </ul>
+                    </td>
+                    <td class="col-md-4">
+                        <ul id="conceptual-skills-readable">
+                            @for(conceptualSkill <- resume.skillSummary.conceptualSkills) {
+                            <li>@conceptualSkill</li>
+                            }
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
     @if(isAdmin) {
+        <li id="skill-item-cloneable" class="list-group-item row cloneable">
+            <div class="col-md-11">
+                <input type="text" value="" class="form-control" />
+            </div>
+            <div class="col-md-1">
+                <button type="button" class="btn btn-link remove-btn remove-skill-item">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </button>
+            </div>
+        </li>
         <form action="/resume/update-summary" method="post">
             <div id="summary-editable-text" class="editable-mode">
-                <textarea name="summaryContent" rows="10" cols="100">@resume.summary</textarea>
+                <button id="computer-skill-add-btn" class="btn btn-link" type="button">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </button>
+                <ul id="computer-skill-list" class="list-group">
+                    @for(computerSkill <- resume.skillSummary.computerSkills) {
+                        <li class="list-group-item row">
+                            <div class="col-md-11">
+                                <input type="text" value="@computerSkill" class="form-control" />
+                            </div>
+                            <div class="col-md-1">
+                                <button type="button" class="btn btn-link remove-btn remove-skill-item">
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                </button>
+                            </div>
+                        </li>
+                    }
+                </ul>
+                <button id="tool-skill-add-btn" class="btn btn-link" type="button">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </button>
+                <ul id="tool-skill-list" class="list-group">
+                    @for(toolSkill <- resume.skillSummary.toolSkills) {
+                        <li class="list-group-item row">
+                            <div class="col-md-11">
+                                <input type="text" value="@toolSkill" class="form-control" />
+                            </div>
+                            <div class="col-md-1">
+                                <button type="button" class="btn btn-link remove-btn remove-skill-item">
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                </button>
+                            </div>
+                        </li>
+                    }
+                </ul>
+                <button id="conceptual-skill-add-btn" class="btn btn-link" type="button">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </button>
+                <ul id="conceptual-skill-list" class="list-group">
+                    @for(conceptualSkill <- resume.skillSummary.conceptualSkills) {
+                        <li class="list-group-item row">
+                            <div class="col-md-11">
+                                <input type="text" value="@conceptualSkill" class="form-control" />
+                            </div>
+                            <div class="col-md-1">
+                                <button type="button" class="btn btn-link remove-btn remove-skill-item">
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                </button>
+                            </div>
+                        </li>
+                    }
+                </ul>
             </div>
             @resume_view.buttonForEditSave("summary-submit", None)
         </form>

@@ -1,12 +1,16 @@
 {
-  "lastUpdated" : 1476585319,
+  "lastUpdated" : 1494922896,
   "profileImageUrl" : "images/profile-image.png",
   "name" : "Jeremy Lord Esquire III",
   "jobTitle" : "Software Engineer II",
   "currentCompany" : "Amazon.com",
   "phoneNo" : "Ask for contact number",
   "email" : "jlord_2006@hotmail.com",
-  "summary" : "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu enim id lectus sodales malesuada ullamcorper sit amet magna. Aenean diam mi, pharetra a hendrerit nec, venenatis in ante. Vestibulum lacus leo, vulputate eu tincidunt quis, placerat iaculis massa. Sed sed sem augue. Maecenas pretium fermentum augue. In hac habitasse platea dictumst. Duis ultrices justo justo, eu placerat odio ornare a. Donec sodales elit nec enim pharetra, at hendrerit tortor fermentum.</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam hendrerit iaculis magna a facilisis. Quisque congue non dui id finibus. Vivamus orci est, ornare eu imperdiet ut, viverra sit amet libero. Phasellus aliquam erat ligula, ac lacinia neque condimentum a. Vivamus egestas pretium sem porttitor pharetra.</p>",
+  "skillSummary" : {
+    "computerSkills" : [ "Revision Control Software (Git, Perforce, ClearCase)", "Bug Tracking Software (JIRA, ClearQuest)" ],
+    "toolSkills" : [ "Java", "C/C++" ],
+    "conceptualSkills" : [ "Agile Development Process", "Linux", "Computer Architecture" ]
+  },
   "researchInterests" : "Software Engineering, Artificial Intelligence, Programming Language Theory, ...",
   "pastExperience" : [ {
     "jobTitle" : "Software Engineering Intern",

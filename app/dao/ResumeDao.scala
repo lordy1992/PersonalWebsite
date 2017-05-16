@@ -17,6 +17,12 @@ class ResumeDao(path: String) {
       resumeStream.close()
     }
 
+    implicit val techSkillSummaryReads: Reads[TechSkillSummary] = (
+      (JsPath \ "computerSkills").read[Seq[String]] and
+      (JsPath \ "toolSkills").read[Seq[String]] and
+      (JsPath \ "conceptualSkills").read[Seq[String]]
+    )(TechSkillSummary.apply _)
+
     implicit val educationReads: Reads[Education] = (
       (JsPath \ "degree").read[String] and
       (JsPath \ "year").read[Int] and
@@ -43,7 +49,7 @@ class ResumeDao(path: String) {
       (JsPath \ "currentCompany").read[String] and
       (JsPath \ "phoneNo").read[String] and
       (JsPath \ "email").read[String] and
-      (JsPath \ "summary").read[String] and
+      (JsPath \ "skillSummary").read[TechSkillSummary] and
       (JsPath \ "researchInterests").read[String] and
       (JsPath \ "pastExperience").read[Seq[Experience]] and
       (JsPath \ "expertise").read[Seq[String]] and
@@ -55,6 +61,12 @@ class ResumeDao(path: String) {
   }
 
   def writeResumeToJson(resume: Resume) : Unit = {
+    implicit val techSkillSummaryWrites: Writes[TechSkillSummary] = (
+      (JsPath \ "computerSkills").write[Seq[String]] and
+      (JsPath \ "toolSkills").write[Seq[String]] and
+      (JsPath \ "conceptualSkills").write[Seq[String]]
+    )(unlift(TechSkillSummary.unapply))
+
     implicit val educationWrites: Writes[Education] = (
       (JsPath \ "degree").write[String] and
       (JsPath \ "year").write[Int] and
@@ -81,7 +93,7 @@ class ResumeDao(path: String) {
       (JsPath \ "currentCompany").write[String] and
       (JsPath \ "phoneNo").write[String] and
       (JsPath \ "email").write[String] and
-      (JsPath \ "summary").write[String] and
+      (JsPath \ "skillSummary").write[TechSkillSummary] and
       (JsPath \ "researchInterests").write[String] and
       (JsPath \ "pastExperience").write[Seq[Experience]] and
       (JsPath \ "expertise").write[Seq[String]] and
@@ -101,7 +113,7 @@ class ResumeDao(path: String) {
     }
 
     // Rename the original resume (keep backups)
-    val originalFile = new File(path)
+    val originalFile = new File(path + "resume.json")
     val backupFile = new File(path + s"backups/resume-$currentTimestamp.json")
     if (originalFile.renameTo(backupFile)) {
       // Renaming succeeded
@@ -124,9 +136,9 @@ class ResumeDao(path: String) {
     writeResumeToJson(modifiedResume)
   }
 
-  def updateResumeSummary(resumeSummary: String) : Unit = {
+  def updateResumeSummary(resumeSummary: TechSkillSummary) : Unit = {
     val (resume, newTimeStamp) = fetchResumeForModification()
-    val modifiedResume = resume.copy(lastUpdated = newTimeStamp, summary = resumeSummary)
+    val modifiedResume = resume.copy(lastUpdated = newTimeStamp, skillSummary = resumeSummary)
 
     writeResumeToJson(modifiedResume)
   }

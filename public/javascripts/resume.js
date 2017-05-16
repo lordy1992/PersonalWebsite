@@ -6,8 +6,34 @@ function topLevelInfoCallback() {
 }
 
 function summaryCallback() {
-    var newValue = $('#summary-info-form').find('textarea').val();
-    $('#summary-readable-text').html(newValue);
+    var computerSkills = $('#computer-skills-readable'),
+        toolSkills = $('#tool-skills-readable'),
+        conceptualSkills = $('#conceptual-skills-readable');
+
+    computerSkills.empty();
+    toolSkills.empty();
+    conceptualSkills.empty();
+
+    $('#computer-skill-list li').each(function() {
+        var newValue = $(this).find('input').val(),
+            newListItem = '<li>' + newValue + '</li>';
+
+        computerSkills.append(newListItem);
+    });
+
+    $('#tool-skill-list li').each(function() {
+        var newValue = $(this).find('input').val(),
+            newListItem = '<li>' + newValue + '</li>';
+
+        toolSkills.append(newListItem);
+    });
+
+    $('#conceptual-skill-list li').each(function() {
+        var newValue = $(this).find('input').val(),
+            newListItem = '<li>' + newValue + '</li>';
+
+        conceptualSkills.append(newListItem);
+    });
 }
 
 function researchInterestCallback() {
@@ -89,6 +115,30 @@ function formPastExperienceRequest() {
     return pastExperience;
 }
 
+function formSummaryRequest() {
+    var computerSkills = [],
+        toolSkills = [],
+        conceptualSkills = [];
+
+    $('#computer-skill-list li').each(function() {
+        computerSkills.push($(this).find('input').val());
+    });
+
+    $('#tool-skill-list li').each(function() {
+        toolSkills.push($(this).find('input').val());
+    });
+
+    $('#conceptual-skill-list li').each(function() {
+        conceptualSkills.push($(this).find('input').val());
+    });
+
+    return {
+        computerSkills: computerSkills,
+        toolSkills: toolSkills,
+        conceptualSkills: conceptualSkills
+    };
+}
+
 function formExpertiseRequest() {
     var expertise = [];
 
@@ -144,7 +194,7 @@ function addDynamicEditor(listItem, optText) {
 $(document).ready(function() {
     var editLinks = [
         {edit: '#top-level-info-edit-link', cancel: '#top-level-info-submit-cancel', sectionId: '#top-level-info-section', successCallback: topLevelInfoCallback},
-        {edit: '#summary-edit-link', cancel: '#summary-submit-cancel', sectionId: '#summary-info-section', successCallback: summaryCallback},
+        {edit: '#summary-edit-link', cancel: '#summary-submit-cancel', sectionId: '#summary-info-section', dataCallback: formSummaryRequest, successCallback: summaryCallback},
         {edit: '#research-interests-edit-link', cancel: '#research-info-submit-cancel', sectionId: '#research-interests-info-section', successCallback: researchInterestCallback},
         {edit: '#past-experience-edit-link', cancel: '#past-experience-submit-cancel', sectionId: '#past-experience-info-section', dataCallback: formPastExperienceRequest},
         {edit: '#expertise-edit-link', cancel: '#expertise-submit-cancel', sectionId: '#expertise-info-section', dataCallback: formExpertiseRequest, successCallback: expertiseCallback},
@@ -167,6 +217,12 @@ $(document).ready(function() {
     });
 
     $(document).on('click', '.remove-expertise', function(e) {
+        e.preventDefault();
+        var parentListEl = $(this).parent().parent();
+        parentListEl.remove();
+    });
+
+    $(document).on('click', '.remove-skill-item', function(e) {
         e.preventDefault();
         var parentListEl = $(this).parent().parent();
         parentListEl.remove();
@@ -259,6 +315,24 @@ $(document).ready(function() {
     $('#expertise-add-button').click(function() {
         var lastListItem = $('#expertise-item-cloneable').clone();
         $('#expertise-list').append(lastListItem);
+        lastListItem.show();
+    });
+
+    $('#computer-skill-add-btn').click(function() {
+        var lastListItem = $('#skill-item-cloneable').clone();
+        $('#computer-skill-list').append(lastListItem);
+        lastListItem.show();
+    });
+
+    $('#tool-skill-add-btn').click(function() {
+        var lastListItem = $('#skill-item-cloneable').clone();
+        $('#tool-skill-list').append(lastListItem);
+        lastListItem.show();
+    });
+
+    $('#conceptual-skill-add-btn').click(function() {
+        var lastListItem = $('#skill-item-cloneable').clone();
+        $('#conceptual-skill-list').append(lastListItem);
         lastListItem.show();
     });
 

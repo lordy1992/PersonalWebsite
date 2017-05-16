@@ -3,7 +3,8 @@ package controllers
 import javax.inject.{Inject, Singleton}
 
 import dao.ResumeDao
-import objects.{Education, Experience, ResumeHeader, SkillBar}
+import objects._
+import play.Logger
 import play.api.libs.json.{JsPath, Json, Reads}
 import play.api.mvc.{Action, Controller, Security}
 import play.api.libs.functional.syntax._
@@ -43,7 +44,13 @@ class ResumeController @Inject() (configuration: play.api.Configuration) extends
 
   def update_summary = withAuth { username => implicit request =>
     request.body.asJson.map { json =>
-      val resumeSummary = (json \ "summaryContent").as[String]
+      val computerSkills = (json \ "computerSkills").as[List[String]]
+      val toolSkills = (json \ "toolSkills").as[List[String]]
+      val conceptualSkills = (json \ "conceptualSkills").as[List[String]]
+
+      val resumeSummary = TechSkillSummary(computerSkills, toolSkills, conceptualSkills)
+
+      Logger.info("Resume Summary: " + resumeSummary)
       resumeDao.updateResumeSummary(resumeSummary)
       Ok(Json.obj("status" -> "Success"))
     }.getOrElse {
