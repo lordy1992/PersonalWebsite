@@ -11,7 +11,7 @@
  * contains a list of past job positions and descriptions. This contains the html for the locked and editable sections.
  *@
 <div id="past-experience-info-section" class="bs-callout bs-callout-primary">
-    @resume_view.headerWithEditOption("Past Experience", "past-experience-edit-link", isAdmin)
+    @resume_view.headerWithEditOption("Work Experience", "past-experience-edit-link", isAdmin)
     <div id="experience-readable-text" class="locked-mode">
         <ul class="list-group">
             @for(experience <- resume.pastExperience) {

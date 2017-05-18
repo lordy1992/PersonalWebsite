@@ -1,39 +1,50 @@
 {
-  "lastUpdated" : 1494922896,
+  "lastUpdated" : 1495089648,
   "profileImageUrl" : "images/profile-image.png",
-  "name" : "Jeremy Lord Esquire III",
-  "jobTitle" : "Software Engineer II",
+  "name" : "Jeremy Lord",
+  "jobTitle" : "Software Development Engineer II",
   "currentCompany" : "Amazon.com",
   "phoneNo" : "Ask for contact number",
-  "email" : "jlord_2006@hotmail.com",
+  "email" : "Ask for email",
   "skillSummary" : {
-    "computerSkills" : [ "Revision Control Software (Git, Perforce, ClearCase)", "Bug Tracking Software (JIRA, ClearQuest)" ],
-    "toolSkills" : [ "Java", "C/C++" ],
-    "conceptualSkills" : [ "Agile Development Process", "Linux", "Computer Architecture" ]
+    "computerSkills" : [ "Revision Control Software (Git, Perforce, ClearCase)", "Bug Tracking Software (JIRA, ClearQuest)", "Unix/Linux Experience", "Build Automation (Gradle, Make, Apache Ant)", "Continuous Integration (Jenkins)", "AWS", "SQL", "NoSQL (DynamoDB in particular)", "IntelliJ/Eclipse/Visual Studio/Vim Experience", "VHDL" ],
+    "toolSkills" : [ "Java", "C/C++", "Python", "Scala", "OpenGL", "Spring MVC", "React", "AngularJS", "Play Framework", "Unity 3D", "Unreal Engine", "x86 and 8052 Assembly Language", "MATLAB" ],
+    "conceptualSkills" : [ "Agile Development Process", "Computer Architecture", "Computer Security", "Web Development", "Android Development", "Graphics/Game Development", "Embedded Development", "FPGA Experience", "PCB Design / Soldering", "JTAG Debugging Experience", "Oscilloscope, Multimeter and Function Generator Usage" ]
   },
   "researchInterests" : "Software Engineering, Artificial Intelligence, Programming Language Theory, ...",
   "pastExperience" : [ {
-    "jobTitle" : "Software Engineering Intern",
+    "jobTitle" : "Software Development Engineer II (September 2015 - Present)",
     "company" : "Amazon.com",
-    "description" : "\n                        \n                                            \n                                            \n                                            Fusce ex nibh, pellentesque vitae pellentesque at, malesuada efficitur augue. Maecenas consequat ultrices sodales. Integer congue ligula in posuere auctor. Cras pretium nibh at nisi mattis, nec sodales magna suscipit. Sed pretium dui nec porta cursus.\n                                        \n                                        \n                                        \n                    ",
+    "description" : "<ul><li>Worked for Fulfillment By Amazon (FBA) as a full-stack web developer, specifically working on the inbound side of the process. This involves working on the code that manages, creates, and tracks shipments that are being sent to Amazon fulfillment centers by Sellers in the FBA program.<br></li><li>Designed and implemented systems using a service-oriented architecture and AWS technologies.<br></li><li>Wrote front-end code using a Spring MVC-like framework, as well as in a legacy Perl/Mason code base.</li><li>Performed Tech Ops duties, including participating in the on-call rotation, had a heavy focus on metrics collection and analyzing service graphs (of traffic, errors, dependency failures, etc..)</li></ul>",
     "additionalPoints" : [ ]
   }, {
-    "jobTitle" : "Software Engineering Intern",
+    "jobTitle" : "Software Development Engineer Intern (January 2014 - June 2014)",
+    "company" : "Amazon.com",
+    "description" : "<ul><li>Worked as a back-end developer for Fulfillment By Amazon (FBA) on the inbound side of the process.</li><li>Wrote and optimized SQL queries as a part of the various projects throughout the internship.</li><li>Wrote and worked on the design for two Marketplace Web Services (MWS) public APIs, and launched the APIs during my internship.</li><li>Worked on operational issues, analyzing metrics collected on the various web services supported by the team, and making improvements to help with the problems found.</li></ul>",
+    "additionalPoints" : [ ]
+  }, {
+    "jobTitle" : "Software Development Engineer Intern (May 2013 - July 2013)",
+    "company" : "Amazon.com",
+    "description" : "<ul><li>Worked on a tools team within Kindle, specifically developer tools for the Kindle Fire tablet.</li><li>Worked on tools for gathering and analyzing a variety of performance metrics to understand how to improve the user experience on the Kindle Fire. These tools were implemented with Java and Python.</li><li>Wrote a full test suite for one of the tools; wrote several custom Android applications for this test suite to serve as stable testing environments.</li><li>Analyzed frame rate data and helped the Platform team look at how to measure the frame rate and improve the smoothness of the tablet.</li><li>Worked as a part of an agile team and took on a lot of responsibility. Made most of the design and implementation decisions in my own projects. Worked in a Linux environment and used tools such as Git, Eclipse and Apache Ant.</li></ul>",
+    "additionalPoints" : [ ]
+  }, {
+    "jobTitle" : "Embedded Software Development Intern (May 2012 - December 2012)",
     "company" : "Broadcom",
-    "description" : "\n                        \n                                            \n                                            \n                                            Duis viverra, ligula a sollicitudin convallis, risus arcu tempor dui, id ultrices purus elit sed nunc. Nam vitae dapibus diam. Donec aliquam ullamcorper lobortis. Duis faucibus commodo molestie.\n                                        \n                                        \n                                        \n                    ",
-    "additionalPoints" : [ ]
-  }, {
-    "jobTitle" : "Bahamut",
-    "company" : "Valhalla",
-    "description" : "\n                        \n                                            \n                                            \n                                            Duis viverra, ligula a sollicitudin convallis, risus arcu tempor dui, id ultrices purus elit sed nunc. Nam vitae dapibus diam. Donec aliquam ullamcorper lobortis. Duis faucibus commodo molestie.\n                                        \n                                        \n                                        \n                    ",
+    "description" : "<ul><li>Worked on embedded software development for Voice over IP (VoIP) team, worked with others and independently on several large projects. Primarily worked with C and embedded Linux; also used Java, HTML and Javascript for certain projects.</li><li>Worked on home automation project which was used as a demo for Broadcom for the Broadband World Forum (BBWF) 2012 and for the Consumer Electronics Association (CES) 2013, creating a daemon to run on integrated access device (IAD), writing programs for WICED (Wireless Internet Connectivity for Embedded Devices) devices, Zigbee devices, and DECT ULE (Digital Enhanced Cordless Telecommunications Ultra Low Energy) devices.</li><li>Worked on an Android Application to control the devices from a tablet.</li><li>Created a web user interface to control the devices using a web browser.</li></ul>",
     "additionalPoints" : [ ]
   } ],
-  "expertise" : [ "Hello World!", "Being an excellent listener", "Bear fighting" ],
+  "expertise" : [ "J Fred Muir Memorial Scholarship in Engineering (2014)", "Charles and Jane Banks Scholarship (2014)", "University Publishers Marketplace Scholarship in Engineering (2013)", "Martin Sikes Memorial Scholarship in Electrical and Computer Engineering (2012)", "Triple \"A\" Scholarship in Applied Science (2011)", "Trek Excellence Scholarship for Continuing Students (2011/2012/2013/2014)", "Dean's List at UBC (Awarded to students with an average above 80%) (2011-2015)" ],
   "skillBars" : [ {
     "skill" : "Java/JavaEE/Spring Framework",
     "progress" : 80
   }, {
     "skill" : "C++",
+    "progress" : 80
+  }, {
+    "skill" : "AWS",
+    "progress" : 80
+  }, {
+    "skill" : "Testing Frameworks/Methodologies (JUnit, Mockito, etc..)",
     "progress" : 80
   }, {
     "skill" : "Javascript",
@@ -42,28 +53,30 @@
     "skill" : "Python",
     "progress" : 70
   }, {
+    "skill" : "Service-Oriented Architecture",
+    "progress" : 70
+  }, {
     "skill" : "Spring MVC",
     "progress" : 50
   }, {
     "skill" : "Scala",
     "progress" : 40
   }, {
-    "skill" : "Spring MVC",
-    "progress" : 40
-  }, {
     "skill" : "Networking",
+    "progress" : 30
+  }, {
+    "skill" : "React",
+    "progress" : 30
+  }, {
+    "skill" : "AngularJS",
     "progress" : 30
   }, {
     "skill" : "Go",
     "progress" : 20
   } ],
   "education" : [ {
-    "degree" : "Bachelor's in Computer Engineering",
+    "degree" : "Bachelor in Computer Engineering at the University of British Columbia",
     "year" : 2015,
     "gpa" : "4.00"
-  }, {
-    "degree" : "Test Number 1",
-    "year" : 2000,
-    "gpa" : "5.00"
   } ]
 }
