@@ -105,4 +105,16 @@ class PostDao(db: Database) {
       publishStatement.executeUpdate()
     }
   }
+
+  def updatePostContent(postId: Int, content: String, title: String): Unit = {
+    val sqlUpdatePost = "UPDATE Posts SET content = ?, title = ? WHERE id = ?"
+    db.withConnection { conn =>
+      val updateStatement = conn.prepareStatement(sqlUpdatePost)
+      updateStatement.setString(1, content)
+      updateStatement.setString(2, title)
+      updateStatement.setInt(3, postId)
+
+      updateStatement.executeUpdate()
+    }
+  }
 }

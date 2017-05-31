@@ -6,6 +6,10 @@
 <html lang="en">
 <head>
     @preamble(title)
+    @if(isAdmin) {
+        <script src="@routes.Assets.versioned("javascripts/nicedit.js")"></script>
+        <script type="text/javascript">bkLib.onDomLoaded(nicEditors.allTextAreas);</script>
+    }
 </head>
 <body>
     @navbar(TECHNICAL)
@@ -30,14 +34,29 @@
                             @if(selectedPost.get.post.status == enums.PostStatus.EDIT) {
                                 <button type="submit" class="btn btn-success" name="action-button" value="publish">Publish</button>
                             }
+                            <button id="edit-post" type="button" class="btn btn-info" name="action-button" value="edit">Edit</button>
                             <button type="submit" class="btn btn-danger" name="action-button" value="delete">Delete</button>
                         </div>
                     </form>
                 }
                 <hr>
-                <div class="post-content">
+                <div id="content-section" class="post-content">
                     @Html(selectedPost.get.post.content)
                 </div>
+                <br>
+                @if(isAdmin) {
+                    <div id="edit-section">
+                        <form name="edit-post-form" action="/edit-technical-post" method="POST">
+                            <label>Title</label><input type="text" name="title" value="@selectedPost.get.post.title" class="form-control" />
+                            <br>
+                                <textarea id="editable-post" name="edit-content" rows="10" cols="100">
+                                    @selectedPost.get.post.content
+                                </textarea>
+                                <button id="submit-edit" type="submit" class="btn btn-primary">Submit</button>
+                            <input type="hidden" name="id" value="@selectedPost.get.id" />
+                        </form>
+                    </div>
+                }
             }
         </div>
         <div class="col-md-4">
@@ -69,5 +88,8 @@
     </div>
 
     @footer()
+    @if(isAdmin) {
+        <script src="@routes.Assets.versioned("javascripts/technical.js")"></script>
+    }
 </body>
 </html>

@@ -48,6 +48,14 @@ class HomeController @Inject()(db: Database, cached: Cached) extends Controller 
     "messageid" -> number
   )
 
+  val editTechnicalPostForm = Form(
+    tuple(
+      "edit-content" -> text,
+      "id" -> number,
+      "title" -> text
+    )
+  )
+
   def index = cached(_ => "index", duration = ActionCacheDuration) {
     Action {
       Ok(views.html.main())
@@ -85,6 +93,12 @@ class HomeController @Inject()(db: Database, cached: Cached) extends Controller 
         }
       }
     }
+  }
+
+  def edit_technical_post = withAuth { username => implicit request =>
+    val contentIdTitle = editTechnicalPostForm.bindFromRequest.get
+    postDao.updatePostContent(contentIdTitle._2, contentIdTitle._1, contentIdTitle._3)
+    Redirect(controllers.routes.HomeController.technical_post(contentIdTitle._2))
   }
 
   def writing = cached(request => "writing." + request.session.get(Security.username).isDefined,
