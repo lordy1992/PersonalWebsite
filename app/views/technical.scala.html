@@ -26,7 +26,7 @@
                 <h1>@selectedPost.get.post.title</h1>
                 <p>
                     <span class="glyphicon glyphicon-time"></span>
-                    <small> Posted on: <time>@selectedPost.get.postTime.toString</time></small>
+                    <small> Posted on: @selectedPost.get.postTime.toString</small>
                 </p>
                 @if(isAdmin) {
                     <form name="publish-delete-form" action="/publish-delete-article" method="POST">

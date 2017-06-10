@@ -1,6 +1,6 @@
 @(buttonId: String, addButtonId: Option[String])
 
-<div align="right" class="edit-mode-only edit-save-panel">
+<div class="edit-mode-only edit-save-panel">
     @if(addButtonId.isDefined) {
         <button id="@addButtonId.get" class="btn btn-link" type="button">
             <span class="glyphicon glyphicon-plus"></span>

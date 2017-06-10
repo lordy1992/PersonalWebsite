@@ -14,16 +14,18 @@
         </ul>
     </div>
     @if(isAdmin) {
-        <li id="expertise-item-cloneable" class="list-group-item row cloneable">
-            <div class="col-md-11">
-                <input type="text" value="" class="form-control" />
-            </div>
-            <div class="col-md-1">
-                <button type="button" class="btn btn-link remove-btn remove-expertise">
-                    <span class="glyphicon glyphicon-remove"></span>
-                </button>
-            </div>
-        </li>
+        <ul>
+            <li id="expertise-item-cloneable" class="list-group-item row cloneable">
+                <div class="col-md-11">
+                    <input type="text" value="" class="form-control" />
+                </div>
+                <div class="col-md-1">
+                    <button type="button" class="btn btn-link remove-btn remove-expertise">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                </div>
+            </li>
+        </ul>
         <form action="/resume/update-expertise-info" method="post">
             <div class="editable-mode">
                 <ul id="expertise-list" class="list-group">

@@ -119,6 +119,7 @@
 
 .heading-edit {
     padding-right: 15px;
+    float: right;
 }
 
 #top-level-info-list .editable-mode {
@@ -146,4 +147,8 @@
 .edit-save-panel > .btn-link {
     margin-bottom: 0px;
     color: green;
+}
+
+.edit-save-panel {
+    float: right;
 }

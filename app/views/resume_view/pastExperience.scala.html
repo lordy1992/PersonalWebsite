@@ -13,7 +13,7 @@
 <div id="past-experience-info-section" class="bs-callout bs-callout-primary">
     @resume_view.headerWithEditOption("Work Experience", "past-experience-edit-link", isAdmin)
     <div id="experience-readable-text" class="locked-mode">
-        <ul class="list-group">
+        <div class="list-group">
             @for(experience <- resume.pastExperience) {
                 <a class="list-group-item inactive-link" href="#">
                     <h4 class="list-group-item-heading">@experience.jobTitle at @experience.company</h4>
@@ -22,16 +22,18 @@
                     </div>
                 </a>
             }
-        </ul>
+        </div>
     </div>
     @if(isAdmin) {
-        <li id="experience-item-cloneable" class="list-group-item cloneable">
-            @buttonForRemoveItem()
-            <label>Job Title</label><input type="text" value="" class="form-control"/>
-            <br>
-            <label>Company</label><input type="text" value="" class="form-control" />
-            <br>
-        </li>
+        <ul>
+            <li id="experience-item-cloneable" class="list-group-item cloneable">
+                @buttonForRemoveItem()
+                <label>Job Title</label><input type="text" value="" class="form-control"/>
+                <br>
+                <label>Company</label><input type="text" value="" class="form-control" />
+                <br>
+            </li>
+        </ul>
         <form action="/resume/update-past-experience" method="post">
             <div class="editable-mode">
                 <ul id="past-experience-list" class="list-group">

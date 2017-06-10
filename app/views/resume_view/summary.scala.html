@@ -9,9 +9,11 @@
     <div id="summary-readable-text" class="locked-mode">
         <table class="table table-bordered">
             <thead>
-                <th>Computer Skills</th>
-                <th>Languages/SDKs/Tools</th>
-                <th>Conceptual Skills</th>
+                <tr>
+                    <th>Computer Skills</th>
+                    <th>Languages/SDKs/Tools</th>
+                    <th>Conceptual Skills</th>
+                </tr>
             </thead>
             <tbody>
                 <tr>
@@ -41,16 +43,18 @@
         </table>
     </div>
     @if(isAdmin) {
-        <li id="skill-item-cloneable" class="list-group-item row cloneable">
-            <div class="col-md-11">
-                <input type="text" value="" class="form-control" />
-            </div>
-            <div class="col-md-1">
-                <button type="button" class="btn btn-link remove-btn remove-skill-item">
-                    <span class="glyphicon glyphicon-remove"></span>
-                </button>
-            </div>
-        </li>
+        <ul>
+            <li id="skill-item-cloneable" class="list-group-item row cloneable">
+                <div class="col-md-11">
+                    <input type="text" value="" class="form-control" />
+                </div>
+                <div class="col-md-1">
+                    <button type="button" class="btn btn-link remove-btn remove-skill-item">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                </div>
+            </li>
+        </ul>
         <form action="/resume/update-summary" method="post">
             <div id="summary-editable-text" class="editable-mode">
                 <button id="computer-skill-add-btn" class="btn btn-link" type="button">
