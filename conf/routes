@@ -14,6 +14,7 @@ GET     /login                              controllers.AuthController.login
 GET     /logout                             controllers.AuthController.logout
 GET     /admin                              controllers.HomeController.admin
 GET     /sitemap.xml                        controllers.HomeController.sitemap
+GET     /robots.txt                         controllers.Assets.at(path="/public", file="robots.txt")
 POST    /authenticate                       controllers.AuthController.authenticate
 POST    /post-article                       controllers.HomeController.post_article
 POST    /edit-technical-post                controllers.HomeController.edit_technical_post
