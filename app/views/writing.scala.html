@@ -1,4 +1,4 @@
-@(articles: List[objects.InternalArticle], isAdmin: Boolean)(implicit title: String)
+@(selectedArticle: Option[objects.InternalArticle], articles: List[(Int, String, org.joda.time.DateTime)], isAdmin: Boolean)(implicit title: String)
 
 @import enums.MenuItems._
 
@@ -22,40 +22,34 @@
             <div class="list-group" id="article-list-id">
                 <div class="list-group-item disabled" style="cursor: default;">List of Articles</div>
 
-                @for((article, ind) <- articles.zipWithIndex) {
-                    @if(ind == 0) {
-                        <a href="#" class="list-group-item active">@article.article.name</a>
+                @for(article <- articles) {
+                    @if(selectedArticle.nonEmpty && article._1 == selectedArticle.get.id) {
+                        <a href="#" class="list-group-item active">@article._2</a>
                     } else {
-                        <a href="#" class="list-group-item">@article.article.name</a>
+                        <a href="@routes.HomeController.writing_article(article._1)" class="list-group-item">@article._2</a>
                     }
                 }
             </div>
         </div>
         <div class="col-md-6">
-            <div id="article-panel" class="panel panel-default">
-                @for((article, ind) <- articles.zipWithIndex) {
-                    @if(ind == 0) {
-                        <div class="article-container">
-                    } else {
-                        <div class="article-container" style="display: none;">
-                    }
-
-                    @if(isAdmin) {
-                        <form name="delete-writing-form" action="/delete-writing" method="POST">
-                            <input type="hidden" name="id" value="@article.id">
-                            <button type="submit" class="btn btn-danger">Delete</button>
-                        </form>
-                    }
-                        <h3 class="text-center">@article.article.name</h3>
+            @if(!selectedArticle.isEmpty) {
+                <div id="article-panel" class="panel panel-default">
+                    <div class="article-container">
+                        @if(isAdmin) {
+                            <form name="delete-writing-form" action="/delete-writing" method="POST">
+                                <input type="hidden" name="id" value="@selectedArticle.get.id">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        }
+                        <h3 class="text-center">@selectedArticle.get.article.name</h3>
                         <div class="panel-body">
-                            @Html(article.article.content)
+                            @Html(selectedArticle.get.article.content)
                         </div>
                     </div>
-                }
-            </div>
+                </div>
+            }
         </div>
     </div>
     @footer()
-    <script src="@routes.Assets.versioned("javascripts/writing.js")"></script>
 </body>
 </html>

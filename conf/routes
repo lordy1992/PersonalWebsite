@@ -7,12 +7,13 @@ GET     /about                              controllers.HomeController.about
 GET     /contact                            controllers.HomeController.contact(sent: Boolean ?= false)
 GET     /technical                          controllers.HomeController.technical(id: Option[Int] = None)
 GET     /technical/:id                      controllers.HomeController.technical_post(id: Int)
-GET     /writing                            controllers.HomeController.writing
+GET     /writing                            controllers.HomeController.writing(id: Option[Int] = None)
+GET     /writing/:id                        controllers.HomeController.writing_article(id: Int)
 GET     /resume                             controllers.ResumeController.resume
 GET     /login                              controllers.AuthController.login
 GET     /logout                             controllers.AuthController.logout
 GET     /admin                              controllers.HomeController.admin
-POST     /authenticate                       controllers.AuthController.authenticate
+POST     /authenticate                      controllers.AuthController.authenticate
 POST    /post-article                       controllers.HomeController.post_article
 POST    /edit-technical-post                controllers.HomeController.edit_technical_post
 POST    /delete-writing                     controllers.HomeController.delete_writing

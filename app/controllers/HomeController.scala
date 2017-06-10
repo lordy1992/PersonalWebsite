@@ -102,11 +102,20 @@ class HomeController @Inject()(db: Database, cached: Cached) extends Controller 
     Redirect(controllers.routes.HomeController.technical_post(contentIdTitle._2))
   }
 
-  def writing = cached(request => "writing." + request.session.get(Security.username).isDefined,
-      duration = ActionCacheDuration) {
+  def writing_article(id: Int) = writing(Some(id))
+
+  def writing(id: Option[Int]) = cached(request => "writing." + id.getOrElse(-1)
+      + "." + request.session.get(Security.username).isDefined, duration = ActionCacheDuration) {
     Action { request =>
       val isAdmin = request.session.get(Security.username).isDefined
-      Ok(views.html.writing(articleDao.listAllArticles(), isAdmin)(title + " | Writing"))
+      val titles = articleDao.getArticleTitles()
+      if (titles.isEmpty) {
+        Ok(views.html.writing(None, titles, isAdmin)(title + " | Writing"))
+      } else {
+        val selectedArticle = articleDao.getArticleById(id.getOrElse(titles(0)._1))
+        Ok(views.html.writing(Some(selectedArticle), titles, isAdmin)(title + " | Writing | "
+          + selectedArticle.article.name))
+      }
     }
   }
 

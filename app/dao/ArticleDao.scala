@@ -23,6 +23,42 @@ class ArticleDao(db: Database) {
     }
   }
 
+  def getArticleTitles(): List[(Int, String, DateTime)] = {
+    val getArticleTitlesSql = "SELECT id, name, created_time FROM Articles ORDER BY created_time ASC"
+
+    val resultBuffer = new ListBuffer[(Int, String, DateTime)]()
+    db.withConnection { conn =>
+      val getArticleTitlesStatement = conn.createStatement()
+      val resultSet = getArticleTitlesStatement.executeQuery(getArticleTitlesSql)
+
+      while (resultSet.next()) {
+        val id = resultSet.getInt("id")
+        val name = resultSet.getString("name")
+        val createdTime = resultSet.getLong("created_time")
+
+        resultBuffer += ((id, name, new DateTime(createdTime)))
+      }
+    }
+
+    resultBuffer.toList
+  }
+
+  def getArticleById(id: Int): InternalArticle = {
+    val sqlGetArticle = "SELECT * FROM Articles WHERE id = ?"
+
+    db.withConnection { conn =>
+      val getArticleStatement = conn.prepareStatement(sqlGetArticle)
+      getArticleStatement.setInt(1, id)
+      val resultSet = getArticleStatement.executeQuery()
+
+      val articleId = resultSet.getInt("id")
+      val name = resultSet.getString("name")
+      val content = resultSet.getString("content")
+
+      InternalArticle(articleId, Article(name, content))
+    }
+  }
+
   def listAllArticles(): List[InternalArticle] = {
     val listAllArticlesSql = "SELECT * FROM Articles ORDER BY created_time ASC"
 
