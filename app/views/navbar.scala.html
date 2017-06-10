@@ -10,6 +10,14 @@
     }
 }
 
+@noScriptItemListBlock(item : MenuItem) = {
+    @if(item == activeItem) {
+        <li class="active noscript"><a href="#"><noscript>@item</noscript></a></li>
+    } else {
+        <li class="noscript"><a href="@item.getPath"><noscript>@item</noscript></a></li>
+    }
+}
+
 @* This is to be included at the top of any pages with the navbar. The page must have bootstrap included. *@
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -28,7 +36,7 @@
                 @itemListBlock(HOME)
                 @itemListBlock(ABOUT)
                 @itemListBlock(CONTACT)
-                <li class="dropdown">
+                <li class="dropdown jsonly">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                        aria-expanded="false">Content <span class="caret"></span> </a>
                     <ul class="dropdown-menu">
@@ -37,6 +45,9 @@
                         @itemListBlock(RESUME)
                     </ul>
                 </li>
+                @noScriptItemListBlock(TECHNICAL)
+                @noScriptItemListBlock(WRITING)
+                @noScriptItemListBlock(RESUME)
             </ul>
         </div> @* .nav-collapse *@
     </div>

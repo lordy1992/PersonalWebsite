@@ -18,7 +18,7 @@ import play.api.mvc._
 @Singleton
 class HomeController @Inject()(db: Database, cached: Cached) extends Controller with Secured {
 
-  implicit val title = "Jeremy Lord"
+  implicit val title = "Jeremy Lord - Musings on Tech, Fiction"
 
   // Constants
   //val ActionCacheDuration = 43200 // Cache for 12 hours -- the content on this page will be updated infrequently, and
@@ -64,13 +64,13 @@ class HomeController @Inject()(db: Database, cached: Cached) extends Controller 
 
   def about = cached(_ => "about", duration = ActionCacheDuration) {
     Action {
-      Ok(views.html.about())
+      Ok(views.html.about()(title + " | About"))
     }
   }
 
   def contact(sent: Boolean) = cached(_ => "contact", duration = ActionCacheDuration) {
     Action {
-      Ok(views.html.contact(justSubmitted = sent))
+      Ok(views.html.contact(justSubmitted = sent)(title + " | Contact"))
     }
   }
 
@@ -82,14 +82,15 @@ class HomeController @Inject()(db: Database, cached: Cached) extends Controller 
       val isAdmin = request.session.get(Security.username).isDefined
       val titles = postDao.getPostTitles(isAdmin)
       if (titles.isEmpty) {
-        Ok(views.html.technical(None, titles, isAdmin))
+        Ok(views.html.technical(None, titles, isAdmin)(title + " | Technical"))
       } else {
         val selectedPost = postDao.getPostContent(id.getOrElse(titles(0)._1), isAdmin)
         if (selectedPost.post.status != PostStatus.PUBLISHED && !isAdmin) {
           // Regular users should not be able to access unpublished posts
-          Ok(views.html.technical(None, titles, isAdmin))
+          Ok(views.html.technical(None, titles, isAdmin)(title + " | Technical | " + selectedPost.post.title))
         } else {
-          Ok(views.html.technical(Some(selectedPost), titles, isAdmin))
+          Ok(views.html.technical(Some(selectedPost), titles, isAdmin)(title + " | Technical | "
+            + selectedPost.post.title))
         }
       }
     }
@@ -105,7 +106,7 @@ class HomeController @Inject()(db: Database, cached: Cached) extends Controller 
       duration = ActionCacheDuration) {
     Action { request =>
       val isAdmin = request.session.get(Security.username).isDefined
-      Ok(views.html.writing(articleDao.listAllArticles(), isAdmin))
+      Ok(views.html.writing(articleDao.listAllArticles(), isAdmin)(title + " | Writing"))
     }
   }
 
@@ -113,7 +114,6 @@ class HomeController @Inject()(db: Database, cached: Cached) extends Controller 
     val messageData = messageForm.bindFromRequest.get
     messageDao.addMessage(messageData)
     Redirect(controllers.routes.HomeController.contact(true))
-   // Ok(views.html.contact(justSubmitted = true))
   }
 
   def admin = withAuth { username => implicit request =>

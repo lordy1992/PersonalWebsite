@@ -15,14 +15,14 @@ import play.api.libs.functional.syntax._
 @Singleton
 class ResumeController @Inject() (configuration: play.api.Configuration) extends Controller with Secured {
 
-  implicit val title = "Jeremy Lord"
+  implicit val title = "Jeremy Lord - Musings on Tech, Fiction"
   val resumeDao = new ResumeDao(configuration.underlying.getString("resume.path"))
 
   def resume = Action { request =>
     val resumeObj = resumeDao.getResumeFromJson()
     val isAdmin = request.session.get(Security.username).isDefined
 
-    Ok(views.html.resume_view.resume(resumeObj, isAdmin, false))
+    Ok(views.html.resume_view.resume(resumeObj, isAdmin, false)(title + " | Resume"))
   }
 
   def update_resume_heading = withAuth { username => implicit request =>
