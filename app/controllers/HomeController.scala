@@ -169,4 +169,12 @@ class HomeController @Inject()(db: Database, cached: Cached) extends Controller 
     articleDao.removeArticle(writingId)
     Redirect(controllers.routes.HomeController.writing())
   }
+
+  def sitemap = cached(_ => "index", duration = ActionCacheDuration) {
+    Action {
+      val articleTitles = articleDao.getArticleTitles.map(articleTitle => ((articleTitle._1, articleTitle._3)))
+      val postTitles = postDao.getPostTitles().map(postTitle => ((postTitle._1, postTitle._3)))
+      Ok(views.xml.sitemap(postTitles, articleTitles))
+    }
+  }
 }

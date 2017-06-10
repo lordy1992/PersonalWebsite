@@ -1,0 +1,41 @@
+@(visibleTechnicalPostIds: List[(Int, org.joda.time.DateTime)], visibleArticleIds: List[(Int, org.joda.time.DateTime)])
+
+@import org.joda.time.DateTime
+
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>https://lordjeremy.com</loc>
+        <lastmod>2017-06-10</lastmod>
+        <changefreq>monthly</changefreq>
+    </url>
+    <url>
+        <loc>https://lordjeremy.com/about</loc>
+        <lastmod>2017-06-10</lastmod>
+        <changefreq>monthly</changefreq>
+    </url>
+    <url>
+        <loc>https://lordjeremy.com/contact</loc>
+        <lastmod>2017-06-10</lastmod>
+        <changefreq>monthly</changefreq>
+    </url>
+    <url>
+        <loc>https://lordjeremy.com/resume</loc>
+        <lastmod>2017-06-10</lastmod>
+        <changefreq>weekly</changefreq>
+    </url>
+    @for(postId <- visibleTechnicalPostIds) {
+        <url>
+            <loc>https://lordjeremy.com/technical/@postId._1</loc>
+            <lastmod>@postId._2.toString("YYYY-MM-dd")</lastmod>
+            <changefreq>weekly</changefreq>
+        </url>
+    }
+    @for(articleId <- visibleArticleIds) {
+        <url>
+            <loc>https://lordjeremy.com/writing/@articleId._1</loc>
+            <lastmod>@articleId._2.toString("YYYY-MM-dd")</lastmod>
+            <changefreq>weekly</changefreq>
+        </url>
+    }
+</urlset>

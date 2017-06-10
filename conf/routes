@@ -13,7 +13,8 @@ GET     /resume                             controllers.ResumeController.resume
 GET     /login                              controllers.AuthController.login
 GET     /logout                             controllers.AuthController.logout
 GET     /admin                              controllers.HomeController.admin
-POST     /authenticate                      controllers.AuthController.authenticate
+GET     /sitemap.xml                        controllers.HomeController.sitemap
+POST    /authenticate                       controllers.AuthController.authenticate
 POST    /post-article                       controllers.HomeController.post_article
 POST    /edit-technical-post                controllers.HomeController.edit_technical_post
 POST    /delete-writing                     controllers.HomeController.delete_writing
