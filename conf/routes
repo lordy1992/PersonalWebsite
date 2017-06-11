@@ -3,6 +3,7 @@
 # ~~~~
 
 GET     /                                   controllers.HomeController.index
+GET     /*path/                             controllers.HomeController.removeTrailingSlash(path: String)
 GET     /about                              controllers.HomeController.about
 GET     /contact                            controllers.HomeController.contact(sent: Boolean ?= false)
 GET     /technical                          controllers.HomeController.technical(id: Option[Int] = None)

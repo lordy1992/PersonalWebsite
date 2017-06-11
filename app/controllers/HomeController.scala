@@ -177,4 +177,8 @@ class HomeController @Inject()(db: Database, cached: Cached) extends Controller 
       Ok(views.xml.sitemap(postTitles, articleTitles))
     }
   }
+
+  def removeTrailingSlash(path: String) = Action {
+    MovedPermanently("/" + path)
+  }
 }
