@@ -13,6 +13,7 @@
                     <button id="top-level-info-edit-link" type="button" class="btn btn-link">Edit</button>
                 </div>
             }
+            @*
             <div class="col-xs-12 col-sm-3">
                 <figure>
                     <img id="resume-profile-img" class="img-circle img-responsive" alt="" src="@routes.Assets.versioned(resume.profileImageUrl)">
@@ -23,7 +24,9 @@
                         <p><input type="submit"></p>
                     }
                 }
+
             </div>
+            *@
             <div class="col-xs-12 col-sm-9">
                 @if(isAdmin) {
                     <form action="/resume/update-heading" method="post">
